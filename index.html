@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M.A.D Guitars · Agent Social IA v4</title>
+<title>M.A.D Guitars · Agent Social IA v5</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -32,6 +32,10 @@ body{background:var(--bg);color:var(--tx);font-family:'Raleway',sans-serif;min-h
 .fg label{font-size:.6rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase}
 .fg input{background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 11px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.8rem;outline:none;width:100%}
 .fg input:focus{border-color:var(--gold)}
+.fg .input-wrap{position:relative;display:flex;align-items:center}
+.fg .input-wrap input{flex:1;padding-right:36px}
+.fg .eye{position:absolute;right:8px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:.9rem;padding:0;line-height:1}
+.fg .eye:hover{color:var(--goldl)}
 .box-ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--gr);line-height:1.6}
 .box-info{background:rgba(52,152,219,.1);border:1px solid rgba(52,152,219,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--bl);line-height:1.6}
 .box-warn{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--re);line-height:1.6}
@@ -157,7 +161,11 @@ textarea{resize:vertical;line-height:1.6}
 
     <hr class="sep">
     <div class="section-label">🤖 Anthropic</div>
-    <div class="fg"><label>Clé API Anthropic</label><input type="password" id="c_ai" placeholder="sk-ant-api03-..."></div>
+    <div class="fg"><label>Clé API Anthropic</label>
+    <div class="input-wrap">
+      <input type="password" id="c_ai" placeholder="sk-ant-api03-...">
+      <button class="eye" type="button" onclick="var i=document.getElementById('c_ai');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
+    </div></div>
 
     <hr class="sep">
     <div class="section-label">☁️ Cloudinary</div>
@@ -170,12 +178,20 @@ textarea{resize:vertical;line-height:1.6}
     <div class="section-label">🎯 Facebook Graph API</div>
     <div class="box-ok">✅ Tes tokens sont prêts — colle-les ici.</div>
     <div class="fg"><label>Facebook Page ID</label><input type="text" id="c_fbpid" value="176948315649787"></div>
-    <div class="fg"><label>Token Facebook Page (Mad-Guitars)</label><input type="password" id="c_fbtoken" placeholder="EAAZBvm..."></div>
+    <div class="fg"><label>Token Facebook Page (Mad-Guitars)</label>
+    <div class="input-wrap">
+      <input type="password" id="c_fbtoken" placeholder="EAAZBvm...">
+      <button class="eye" type="button" onclick="var i=document.getElementById('c_fbtoken');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
+    </div></div>
 
     <hr class="sep">
     <div class="section-label">📸 Instagram Graph API</div>
     <div class="fg"><label>Instagram Account ID</label><input type="text" id="c_igid" value="17841406709165277"></div>
-    <div class="fg"><label>Token Instagram (même token FB)</label><input type="password" id="c_igtoken" placeholder="EAAZBvm..."></div>
+    <div class="fg"><label>Token Instagram (même token FB)</label>
+    <div class="input-wrap">
+      <input type="password" id="c_igtoken" placeholder="EAAZBvm...">
+      <button class="eye" type="button" onclick="var i=document.getElementById('c_igtoken');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
+    </div></div>
 
     <hr class="sep">
     <div class="section-label">⚡ Zapier (optionnel)</div>
@@ -190,7 +206,7 @@ textarea{resize:vertical;line-height:1.6}
 
 <!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v4 · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v5 · Full Auto</small></div>
   <div style="display:flex;align-items:center;gap:11px">
     <div class="live"><div class="dot"></div>Agent actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
@@ -312,7 +328,7 @@ document.getElementById('btn-cancel').addEventListener('click', function(){
   modal.style.display = 'none';
 });
 document.getElementById('btn-save').addEventListener('click', function(){
-  cfg.anthropic   = document.getElementById('c_ai').value.trim();
+  cfg.anthropic   = document.getElementById('c_ai').value.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
   cfg.cloudName   = document.getElementById('c_cn').value.trim();
   cfg.cloudKey    = document.getElementById('c_ck').value.trim();
   cfg.cloudSecret = document.getElementById('c_cs').value.trim();
@@ -454,7 +470,7 @@ async function genText(net){
   var tone = document.getElementById('tone').value;
   var ctx  = document.getElementById('ctx').value;
   var prompt = 'Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[tone]+'\n'+(ctx?'Contexte : '+ctx:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}';
-  var key = cfg.anthropic.trim();
+  var key = cfg.anthropic.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
   // Use XMLHttpRequest to avoid header encoding issues
   var d = await new Promise(function(resolve, reject){
     var xhr = new XMLHttpRequest();
