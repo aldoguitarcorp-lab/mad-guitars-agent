@@ -206,7 +206,7 @@ textarea{resize:vertical;line-height:1.6}
 
 <!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v9 · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v10 · Full Auto</small></div>
   <div style="display:flex;align-items:center;gap:11px">
     <div class="live"><div class="dot"></div>Agent actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
@@ -294,7 +294,7 @@ textarea{resize:vertical;line-height:1.6}
 
   <button class="gbtn" id="gbtn">
     <span id="gi">✨</span>
-    <span id="gt">Générer &amp; Publier</span>
+    <span id="gt">✨ Générer</span>
     <div class="spin" id="gs"></div>
   </button>
 
@@ -599,23 +599,10 @@ async function runAgent(){
     try{ g=await genText(net); updCard(cid,g.texte,g.hashtags); log('✅ Texte '+net+' OK','ok'); }
     catch(e){ updCard(cid,'❌ '+e.message,''); setSt(cid,'ko','❌ Erreur IA'); log('❌ IA: '+e.message,'ko'); setP(50+i*40); continue; }
     setP(40+i*30);
-    var full = g.texte+'\n\n'+g.hashtags;
-    setSt(cid,'go','⏳ Publication…');
-    log('🚀 Post '+net+' via '+pubMode+'…','bl');
-    try{
-      var pid;
-      if(pubMode==='direct'&&net==='facebook') pid=await pubFacebook(full,cloudUrl);
-      else if(pubMode==='direct'&&net==='instagram') pid=await pubInstagram(full,cloudUrl);
-      else if(pubMode==='zapier') pid=await pubZapier(net,g.texte,g.hashtags,cloudUrl);
-      else{ pubSemi(cid,net,g.texte,g.hashtags,cloudUrl); pid='semi'; }
-      if(pid==='semi'||pubMode==='semi'){ setSt(cid,'copy','📋 Prêt à copier'); log('📋 '+net+' semi-auto prêt','info'); }
-      else{ setSt(cid,'ok','✅ Posté · '+pid); log('✅ '+net+' posté ! ID: '+pid,'ok'); }
-    }catch(e){
-      setSt(cid,'ko','❌ '+e.message); log('❌ '+net+': '+e.message,'ko');
-      pubSemi(cid,net,g.texte,g.hashtags,cloudUrl);
-      setSt(cid,'copy','📋 Fallback semi-auto');
-      log('ℹ️ Fallback semi-auto activé','info');
-    }
+    // Store cloudUrl for later posting
+    window['_cloud_'+cid] = cloudUrl;
+    setSt(cid,'wait','✏️ À relire');
+    log('✏️ '+net+' — relis et corrige avant de poster','info');
     setP(60+(i+1)*40/netList.length);
     await new Promise(function(r){setTimeout(r,300);});
   }
@@ -629,7 +616,7 @@ function mkCard(id,net){
   var d=document.createElement('div'); d.id=id; d.className='card';
   d.innerHTML='<div class="ch"><div class="cp">'+(NL[net]||net)+'</div><span class="badge wait" id="'+id+'_st">⏳ En attente</span></div>'+
     '<div class="cb" id="'+id+'_cb">'+(selPhoto?'<img class="ci v" src="'+selPhoto.dataUrl+'">':'')+
-    '<div class="ct ld" id="'+id+'_t">✨ Génération…</div>'+
+    '<div class="ct ld" id="'+id+'_t">✨ Génération…</div><div style="font-size:.6rem;color:var(--dim);margin-top:4px;font-style:italic">✏️ Clique sur le texte pour le modifier avant de poster</div>'+
     '<div class="ctags" id="'+id+'_h"></div></div>'+
     '<div class="car">'+
     '<button class="bsm br" id="'+id+'_rbtn">↺ Regénérer</button>'+
@@ -643,8 +630,23 @@ function mkCard(id,net){
 }
 function updCard(id,t,h){
   var te=document.getElementById(id+'_t'),he=document.getElementById(id+'_h');
-  if(te){te.textContent=t;te.classList.remove('ld');}
-  if(he)he.textContent=h;
+  if(te){
+    te.textContent=t;
+    te.classList.remove('ld');
+    te.contentEditable='true';
+    te.style.outline='1px dashed rgba(200,150,12,0.3)';
+    te.style.borderRadius='4px';
+    te.style.padding='6px';
+    te.style.minHeight='60px';
+    te.title='Clique pour modifier';
+  }
+  if(he){
+    he.textContent=h;
+    he.contentEditable='true';
+    he.style.outline='1px dashed rgba(200,150,12,0.2)';
+    he.style.borderRadius='4px';
+    he.style.padding='4px';
+  }
 }
 function setSt(id,type,label){
   var el=document.getElementById(id+'_st');
@@ -665,8 +667,8 @@ async function regenCard(id,net){
   catch(e){ updCard(id,'❌ '+e.message,''); setSt(id,'ko','❌'); }
 }
 async function repostCard(id,net){
-  var t=document.getElementById(id+'_t')&&document.getElementById(id+'_t').textContent||'';
-  var h=document.getElementById(id+'_h')&&document.getElementById(id+'_h').textContent||'';
+  var t=document.getElementById(id+'_t')&&document.getElementById(id+'_t').innerText||'';
+  var h=document.getElementById(id+'_h')&&document.getElementById(id+'_h').innerText||'';
   var btn=document.getElementById(id+'_pbtn'); btn.disabled=true;
   setSt(id,'go','⏳ Repost…');
   var cloudUrl=selPhoto&&selPhoto.cloudUrl||null;
