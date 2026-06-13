@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M.A.D Guitars · Agent Social IA v5</title>
+<title>M.A.D Guitars · Agent Social IA v7</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -206,7 +206,7 @@ textarea{resize:vertical;line-height:1.6}
 
 <!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v5 · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v7 · Full Auto</small></div>
   <div style="display:flex;align-items:center;gap:11px">
     <div class="live"><div class="dot"></div>Agent actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
@@ -471,25 +471,20 @@ async function genText(net){
   var ctx  = document.getElementById('ctx').value;
   var prompt = 'Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[tone]+'\n'+(ctx?'Contexte : '+ctx:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}';
   var key = cfg.anthropic.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
-  // Use XMLHttpRequest to avoid header encoding issues
-  var d = await new Promise(function(resolve, reject){
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://api.anthropic.com/v1/messages', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('x-api-key', key);
-    xhr.setRequestHeader('anthropic-version', '2023-06-01');
-    xhr.onload = function(){ 
-      try{ resolve(JSON.parse(xhr.responseText)); }
-      catch(e){ reject(new Error('Réponse invalide: '+xhr.responseText.substring(0,100))); }
-    };
-    xhr.onerror = function(){ reject(new Error('Erreur réseau XHR')); };
-    xhr.send(JSON.stringify({
-      model:'claude-sonnet-4-20250514', max_tokens:1000,
+  var r = await fetch('/api/anthropic', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      _apiKey: key,
+      model:'claude-sonnet-4-6', max_tokens:1000,
       system:'Réponds uniquement en JSON valide sans backticks ni markdown.',
       messages:[{role:'user',content:prompt}]
-    }));
+    })
   });
-  var raw = (d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text)||'{}';
+  if(r.status===401) throw new Error('Clé Anthropic invalide');
+  if(!r.ok) throw new Error('Erreur API: '+r.status);
+  var d = await r.json();
+    var raw = (d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text)||'{}';
   try{ return JSON.parse(raw.replace(/```json|```/g,'').trim()); }
   catch(e){ return {texte:raw, hashtags:'#MADGuitars #Lutherie #CustomGuitar'}; }
 }
