@@ -3,247 +3,188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M.A.D Guitars · Agent Social IA v7</title>
+<title>M.A.D Guitars · Agent Social IA v14</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --gold:#c8960c;--goldl:#f5d06e;--bg:#0c0c0c;--s1:#141414;--s2:#1c1c1c;
-  --bd:#2a2a2a;--tx:rgba(255,255,255,.88);--dim:rgba(255,255,255,.42);
-  --gr:#2ecc71;--re:#e74c3c;--bl:#3498db;--pu:#9b59b6;--or:#e67e22;
-}
-body{background:var(--bg);color:var(--tx);font-family:'Raleway',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+:root{--gold:#c8960c;--gl:#f5d06e;--bg:#0c0c0c;--s1:#141414;--s2:#1c1c1c;--bd:#2a2a2a;--tx:rgba(255,255,255,.88);--dim:rgba(255,255,255,.42);--gr:#2ecc71;--re:#e74c3c;--bl:#3498db}
+body{background:var(--bg);color:var(--tx);font-family:'Raleway',sans-serif;min-height:100vh;display:flex;flex-direction:column;font-size:14px}
 
 /* MODAL */
-#cfg-modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.9);
-  z-index:9999;display:none;
-  align-items:center;justify-content:center;padding:16px;
-}
-#cfg-modal.open{display:flex}
-.mbox{
-  background:var(--s1);border:1px solid var(--bd);border-top:3px solid var(--gold);
-  border-radius:8px;padding:24px;width:100%;max-width:480px;
-  max-height:90vh;overflow-y:auto;display:flex;flex-direction:column;gap:14px;
-}
-.mbox h2{font-family:'Cinzel Decorative',serif;color:var(--goldl);font-size:.9rem}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}
+#modal.open{display:flex}
+.mbox{background:var(--s1);border:1px solid var(--bd);border-top:3px solid var(--gold);border-radius:8px;padding:24px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.mbox h2{font-family:'Cinzel Decorative',serif;color:var(--gl);font-size:.9rem}
 .sep{border:none;border-top:1px solid var(--bd)}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fg label{font-size:.6rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase}
-.fg input{background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 11px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.8rem;outline:none;width:100%}
-.fg input:focus{border-color:var(--gold)}
-.fg .input-wrap{position:relative;display:flex;align-items:center}
-.fg .input-wrap input{flex:1;padding-right:36px}
-.fg .eye{position:absolute;right:8px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:.9rem;padding:0;line-height:1}
-.fg .eye:hover{color:var(--goldl)}
-.box-ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--gr);line-height:1.6}
-.box-info{background:rgba(52,152,219,.1);border:1px solid rgba(52,152,219,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--bl);line-height:1.6}
-.box-warn{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--re);line-height:1.6}
-.section-label{font-weight:700;color:var(--goldl);font-size:.8rem}
+.fl{display:flex;flex-direction:column;gap:4px}
+.fl label{font-size:.58rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase}
+.iw{position:relative;display:flex;align-items:center}
+.iw input{flex:1;background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 36px 8px 10px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.78rem;outline:none}
+.iw input:focus{border-color:var(--gold)}
+.iw .eye{position:absolute;right:8px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:.9rem}
+.fl input[type=text]{background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 10px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.78rem;outline:none;width:100%}
+.fl input[type=text]:focus{border-color:var(--gold)}
+.box-ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);border-radius:5px;padding:8px 10px;font-size:.72rem;color:var(--gr)}
+.box-w{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);border-radius:5px;padding:8px 10px;font-size:.72rem;color:var(--re)}
+.slbl{font-weight:700;color:var(--gl);font-size:.78rem}
 .mbtns{display:flex;gap:8px;margin-top:4px}
-.btn-save{flex:1;padding:11px;background:var(--gold);color:#000;border:none;border-radius:6px;font-family:'Raleway',sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;letter-spacing:.1em;text-transform:uppercase}
-.btn-cancel{flex:1;padding:11px;background:none;border:1px solid var(--bd);color:var(--dim);border-radius:6px;font-family:'Raleway',sans-serif;font-size:.78rem;cursor:pointer}
+.bsave{flex:1;padding:10px;background:var(--gold);color:#000;border:none;border-radius:6px;font-family:'Raleway',sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;letter-spacing:.08em;text-transform:uppercase}
+.bcancel{flex:1;padding:10px;background:none;border:1px solid var(--bd);color:var(--dim);border-radius:6px;font-family:'Raleway',sans-serif;font-size:.78rem;cursor:pointer}
 
 /* HEADER */
-header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--bd);background:var(--s1)}
-.logo{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--goldl)}
-.logo small{display:block;font-family:'Raleway',sans-serif;font-size:.62rem;font-weight:300;letter-spacing:.28em;color:var(--dim);margin-top:2px}
-.live{display:flex;align-items:center;gap:7px;font-size:.68rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--gr);box-shadow:0 0 8px var(--gr);animation:blink 2s infinite}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--bd);background:var(--s1);position:sticky;top:0;z-index:100}
+.logo{font-family:'Cinzel Decorative',serif;font-size:.95rem;color:var(--gl)}
+.logo small{display:block;font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.28em;color:var(--dim);margin-top:2px}
+.hright{display:flex;align-items:center;gap:10px}
+.live{display:flex;align-items:center;gap:6px;font-size:.62rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gr);box-shadow:0 0 6px var(--gr);animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.cfg-btn{background:none;border:1px solid var(--bd);color:var(--dim);padding:7px 13px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.cfg-btn:hover{border-color:var(--gold);color:var(--goldl)}
+.cfg-btn{background:none;border:1px solid var(--bd);color:var(--dim);padding:6px 12px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.cfg-btn:hover{border-color:var(--gold);color:var(--gl)}
 
 /* LAYOUT */
-main{flex:1;display:grid;grid-template-columns:290px 1fr;overflow:hidden}
-aside{border-right:1px solid var(--bd);padding:18px 16px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;height:calc(100vh - 65px)}
-.area{padding:20px 24px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:calc(100vh - 65px)}
+main{flex:1;display:grid;grid-template-columns:270px 1fr;overflow:hidden}
+aside{border-right:1px solid var(--bd);padding:16px 14px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;height:calc(100vh - 57px)}
+.area{padding:18px 22px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;height:calc(100vh - 57px)}
 
-/* SIDEBAR COMPONENTS */
-.stitle{font-size:.58rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.dz{border:2px dashed var(--bd);border-radius:6px;padding:18px 12px;text-align:center;cursor:pointer;transition:all .25s;background:var(--s2)}
-.dz:hover,.dz.over{border-color:var(--gold);background:rgba(200,150,12,.06)}
-.dz p{font-size:.74rem;color:var(--dim);line-height:1.6}
-.dz strong{color:var(--goldl)}
+/* SIDEBAR */
+.st{font-size:.56rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.dz{border:2px dashed var(--bd);border-radius:6px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .25s;background:var(--s2)}
+.dz:hover,.dz.over{border-color:var(--gold);background:rgba(200,150,12,.05)}
+.dz p{font-size:.72rem;color:var(--dim);line-height:1.5}
+.dz strong{color:var(--gl)}
 #fi{display:none}
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px}
-.thumb{aspect-ratio:1;border-radius:4px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:7px}
+.thumb{aspect-ratio:1;border-radius:3px;overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
 .thumb.sel{border-color:var(--gold)}
 .thumb img{width:100%;height:100%;object-fit:cover}
-.thumb .rb{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.8);color:var(--re);border:none;border-radius:50%;width:15px;height:15px;font-size:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.thumb .rb{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.8);color:var(--re);border:none;border-radius:50%;width:14px;height:14px;font-size:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
 .thumb:hover .rb{opacity:1}
-.ub{position:absolute;bottom:2px;left:2px;background:var(--gr);border-radius:3px;font-size:7px;padding:1px 4px;color:#000;font-weight:700;display:none}
-.thumb.up .ub{display:block}
-
 .nets{display:flex;flex-direction:column;gap:5px}
-.nb{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:6px;border:1px solid var(--bd);background:var(--s2);color:var(--tx);cursor:pointer;font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:600;transition:all .2s}
-.nb:hover{border-color:var(--gold)}
-.nb.on{border-color:var(--gold);background:rgba(200,150,12,.1);color:var(--goldl)}
-.nb .nh{font-size:.6rem;color:var(--dim);font-weight:300;margin-top:1px}
+.nb{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:5px;border:1px solid var(--bd);background:var(--s2);color:var(--tx);cursor:pointer;font-family:'Raleway',sans-serif;font-size:.76rem;font-weight:600;transition:all .2s}
+.nb:hover{border-color:var(--gold)}.nb.on{border-color:var(--gold);background:rgba(200,150,12,.1);color:var(--gl)}
+.nb .nh{font-size:.58rem;color:var(--dim);font-weight:300;margin-top:1px}
 .nc{margin-left:auto;width:13px;height:13px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:7px;transition:all .2s;flex-shrink:0}
 .nb.on .nc{background:var(--gold);border-color:var(--gold);color:#000}
-
 .ftabs{display:flex;gap:4px;flex-wrap:wrap}
-.fb{padding:4px 10px;border-radius:20px;border:1px solid var(--bd);background:none;color:var(--dim);font-family:'Raleway',sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all .2s}
-.fb:hover{border-color:var(--gold);color:var(--goldl)}
-.fb.on{background:var(--gold);border-color:var(--gold);color:#000}
-
-select,textarea{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 10px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.76rem;outline:none}
+.fb{padding:4px 10px;border-radius:20px;border:1px solid var(--bd);background:none;color:var(--dim);font-family:'Raleway',sans-serif;font-size:.64rem;font-weight:600;cursor:pointer;transition:all .2s}
+.fb:hover{border-color:var(--gold);color:var(--gl)}.fb.on{background:var(--gold);border-color:var(--gold);color:#000}
+select,textarea{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:7px 9px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.74rem;outline:none}
 select:focus,textarea:focus{border-color:var(--gold)}
-textarea{resize:vertical;line-height:1.6}
-
-.pmodes{display:flex;flex-direction:column;gap:5px}
-.pm{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:6px;border:1px solid var(--bd);background:var(--s2);cursor:pointer;transition:all .2s}
-.pm:hover{border-color:var(--gold)}
-.pm.on{border-color:var(--gold);background:rgba(200,150,12,.08)}
-.pm-icon{font-size:1rem}
-.pm-title{font-size:.76rem;font-weight:700;color:var(--tx)}
-.pm-desc{font-size:.62rem;color:var(--dim);line-height:1.4;margin-top:1px}
-.pm-radio{margin-left:auto;width:13px;height:13px;border-radius:50%;border:2px solid var(--bd);flex-shrink:0;transition:all .2s}
-.pm.on .pm-radio{background:var(--gold);border-color:var(--gold)}
-
+textarea{resize:vertical;line-height:1.55}
+.pmodes{display:flex;flex-direction:column;gap:4px}
+.pm{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:5px;border:1px solid var(--bd);background:var(--s2);cursor:pointer;transition:all .2s}
+.pm:hover{border-color:var(--gold)}.pm.on{border-color:var(--gold);background:rgba(200,150,12,.08)}
+.pm-t{font-size:.74rem;font-weight:700}.pm-d{font-size:.6rem;color:var(--dim);margin-top:1px}
+.pmr{margin-left:auto;width:12px;height:12px;border-radius:50%;border:2px solid var(--bd);flex-shrink:0;transition:all .2s}
+.pm.on .pmr{background:var(--gold);border-color:var(--gold)}
 .pw{height:3px;background:var(--bd);border-radius:2px;overflow:hidden;display:none}
-.pb{height:100%;background:linear-gradient(90deg,var(--gold),var(--goldl));border-radius:2px;transition:width .4s ease;width:0%}
-
-.gbtn{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),var(--goldl));color:#000;border:none;border-radius:6px;font-family:'Cinzel Decorative',serif;font-size:.7rem;font-weight:900;letter-spacing:.1em;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:7px}
-.gbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,150,12,.35)}
+.pb{height:100%;background:linear-gradient(90deg,var(--gold),var(--gl));border-radius:2px;transition:width .4s ease;width:0%}
+.gbtn{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),var(--gl));color:#000;border:none;border-radius:6px;font-family:'Cinzel Decorative',serif;font-size:.68rem;font-weight:900;letter-spacing:.1em;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:7px}
+.gbtn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,150,12,.3)}
 .gbtn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-
-/* CARDS */
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:7px;overflow:hidden;animation:si .4s ease both}
-@keyframes si{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.ch{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-bottom:1px solid var(--bd);background:var(--s2)}
-.cp{font-size:.76rem;font-weight:700}
-.badge{display:inline-flex;align-items:center;gap:5px;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px}
-.badge.wait{background:rgba(230,126,34,.15);color:var(--or)}
-.badge.go{background:rgba(52,152,219,.15);color:var(--bl)}
-.badge.ok{background:rgba(46,204,113,.15);color:var(--gr)}
-.badge.ko{background:rgba(231,76,60,.15);color:var(--re)}
-.badge.copy{background:rgba(155,89,182,.15);color:var(--pu)}
-.cb{padding:12px}
-.ci{width:100%;max-height:140px;object-fit:cover;border-radius:5px;margin-bottom:10px;display:none}
-.ci.v{display:block}
-.ct{font-size:.84rem;line-height:1.75;white-space:pre-wrap;min-height:40px}
-.ct.ld{color:var(--dim);font-style:italic}
-.ctags{margin-top:8px;font-size:.72rem;color:var(--gold);line-height:1.9}
-.car{display:flex;gap:6px;padding:10px 15px;border-top:1px solid var(--bd);background:var(--s2)}
-.bsm{flex:1;padding:7px 9px;border-radius:5px;border:none;font-family:'Raleway',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.br{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.br:hover{border-color:var(--bl);color:var(--bl)}
-.bc{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.bc:hover{border-color:var(--gold);color:var(--goldl)}
-.bp{background:linear-gradient(135deg,var(--gold),var(--goldl));color:#000;font-weight:800;font-size:.78rem;padding:9px 14px}.bp:hover{box-shadow:0 4px 14px rgba(200,150,12,.4)}
-.bp:disabled{opacity:.4;cursor:not-allowed}
-
-.sa-panel{background:var(--s2);border:1px solid var(--bd);border-radius:5px;padding:12px;display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.sa-panel h3{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--goldl)}
-.sa-url{font-size:.68rem;color:var(--bl);word-break:break-all;background:var(--s1);padding:7px;border-radius:4px;border:1px solid var(--bd)}
-.sa-copy{width:100%;padding:8px;background:var(--pu);color:#fff;border:none;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.07em;text-transform:uppercase}
-
-.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--dim);text-align:center;padding:40px 20px}
-.empty-i{font-size:2.8rem;opacity:.2}
-.empty p{font-size:.8rem;line-height:1.7;max-width:260px}
-
 .spin{width:12px;height:12px;border:2px solid rgba(0,0,0,.25);border-top-color:#000;border-radius:50%;animation:sp .6s linear infinite;display:none}
 @keyframes sp{to{transform:rotate(360deg)}}
 
-.log{background:var(--s2);border:1px solid var(--bd);border-radius:5px;padding:9px 12px;font-size:.67rem;font-family:monospace;color:var(--dim);max-height:85px;overflow-y:auto;line-height:1.9}
-.le{display:block}.le.ok{color:var(--gr)}.le.ko{color:var(--re)}.le.info{color:var(--gold)}.le.bl{color:var(--bl)}
+/* CARDS */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:7px;overflow:hidden;animation:si .35s ease both}
+@keyframes si{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--bd);background:var(--s2)}
+.cp{font-size:.74rem;font-weight:700}
+.bdg{display:inline-flex;align-items:center;gap:4px;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px}
+.wait{background:rgba(230,126,34,.15);color:#e67e22}
+.edit-st{background:rgba(52,152,219,.15);color:var(--bl)}
+.ok{background:rgba(46,204,113,.15);color:var(--gr)}
+.ko{background:rgba(231,76,60,.15);color:var(--re)}
+.cpbadge{background:rgba(155,89,182,.15);color:#9b59b6}
+.cb{padding:14px}
+.img-ok{font-size:.6rem;color:var(--gr);margin-bottom:8px;padding:3px 8px;background:rgba(46,204,113,.08);border-radius:4px;display:inline-block}
+.ct{font-size:.84rem;line-height:1.75;white-space:pre-wrap;min-height:50px;border-radius:4px;padding:6px;transition:outline .2s}
+.ct.ld{color:var(--dim);font-style:italic}
+.ct.ready{outline:1px dashed rgba(200,150,12,.35);cursor:text}
+.ctags{margin-top:8px;font-size:.7rem;color:var(--gold);line-height:1.9;border-radius:4px;padding:4px;outline:1px dashed rgba(200,150,12,.2)}
+.edit-hint{font-size:.56rem;color:var(--dim);font-style:italic;margin-top:4px}
+.car{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);background:var(--s2)}
+.bsm{flex:1;padding:8px 10px;border-radius:5px;border:none;font-family:'Raleway',sans-serif;font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.br{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.br:hover{border-color:var(--bl);color:var(--bl)}
+.bc{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.bc:hover{border-color:var(--gold);color:var(--gl)}
+.bpost{flex:2;background:linear-gradient(135deg,var(--gold),var(--gl));color:#000;font-weight:800;font-size:.72rem}.bpost:hover{box-shadow:0 4px 14px rgba(200,150,12,.4)}
+.bpost:disabled{opacity:.4;cursor:not-allowed}
 
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px}
+/* SEMI PANEL */
+.sa{background:var(--s2);border:1px solid var(--bd);border-radius:5px;padding:12px;margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.sa h3{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gl)}
+.sa-url{font-size:.64rem;color:var(--bl);word-break:break-all;background:var(--s1);padding:6px;border-radius:4px;border:1px solid var(--bd)}
+.sa-cp{width:100%;padding:8px;background:#9b59b6;color:#fff;border:none;border-radius:4px;font-family:'Raleway',sans-serif;font-size:.66rem;font-weight:700;cursor:pointer;text-transform:uppercase}
+
+/* EMPTY */
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--dim);text-align:center;padding:40px 20px}
+.empty-i{font-size:2.5rem;opacity:.2}
+.empty p{font-size:.78rem;line-height:1.7;max-width:260px}
+
+/* LOG */
+.log{background:var(--s2);border:1px solid var(--bd);border-radius:4px;padding:9px 12px;font-size:.64rem;font-family:monospace;color:var(--dim);max-height:80px;overflow-y:auto;line-height:1.9}
+.le{display:block}.ok2{color:var(--gr)}.ko2{color:var(--re)}.info{color:var(--gold)}.bl2{color:var(--bl)}
+
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
 </style>
 </head>
 <body>
 
-<!-- ══ MODAL CONFIG ══ -->
-<div id="cfg-modal">
-  <div class="mbox">
-    <h2>⚙️ Configuration API</h2>
-    <div class="box-warn">⚠️ Ne partage jamais tes clés dans le chat. Stockées localement dans ton navigateur.</div>
-
-    <hr class="sep">
-    <div class="section-label">🤖 Anthropic</div>
-    <div class="fg"><label>Clé API Anthropic</label>
-    <div class="input-wrap">
-      <input type="password" id="c_ai" placeholder="sk-ant-api03-...">
-      <button class="eye" type="button" onclick="var i=document.getElementById('c_ai');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
-    </div></div>
-
-    <hr class="sep">
-    <div class="section-label">☁️ Cloudinary</div>
-    <div class="box-ok">Cloud Name et API Key pré-remplis. Entre ton API Secret uniquement.</div>
-    <div class="fg"><label>Cloud Name</label><input type="text" id="c_cn" value="dzuuupd7t"></div>
-    <div class="fg"><label>API Key</label><input type="text" id="c_ck" value="818816489569596"></div>
-    <div class="fg"><label>API Secret</label><input type="password" id="c_cs" placeholder="Ton API Secret Cloudinary"></div>
-
-    <hr class="sep">
-    <div class="section-label">🎯 Facebook Graph API</div>
-    <div class="box-ok">✅ Tes tokens sont prêts — colle-les ici.</div>
-    <div class="fg"><label>Facebook Page ID</label><input type="text" id="c_fbpid" value="176948315649787"></div>
-    <div class="fg"><label>Token Facebook Page (Mad-Guitars)</label>
-    <div class="input-wrap">
-      <input type="password" id="c_fbtoken" placeholder="EAAZBvm...">
-      <button class="eye" type="button" onclick="var i=document.getElementById('c_fbtoken');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
-    </div></div>
-
-    <hr class="sep">
-    <div class="section-label">📸 Instagram Graph API</div>
-    <div class="fg"><label>Instagram Account ID</label><input type="text" id="c_igid" value="17841406709165277"></div>
-    <div class="fg"><label>Token Instagram (même token FB)</label>
-    <div class="input-wrap">
-      <input type="password" id="c_igtoken" placeholder="EAAZBvm...">
-      <button class="eye" type="button" onclick="var i=document.getElementById('c_igtoken');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
-    </div></div>
-
-    <hr class="sep">
-    <div class="section-label">⚡ Zapier (optionnel)</div>
-    <div class="fg"><label>Webhook URL</label><input type="text" id="c_zap" placeholder="https://hooks.zapier.com/hooks/catch/..."></div>
-
-    <div class="mbtns">
-      <button class="btn-cancel" id="btn-cancel">Annuler</button>
-      <button class="btn-save" id="btn-save">💾 Sauvegarder</button>
-    </div>
+<div id="modal">
+<div class="mbox">
+  <h2>⚙️ Configuration API</h2>
+  <div class="box-w">⚠️ Clés stockées localement dans ton navigateur uniquement.</div>
+  <hr class="sep">
+  <div class="slbl">🤖 Anthropic</div>
+  <div class="fl"><label>Clé API</label><div class="iw"><input type="password" id="c_ai" placeholder="sk-ant-api03-..."><button class="eye" onclick="toggle('c_ai',this)">👁</button></div></div>
+  <hr class="sep">
+  <div class="slbl">☁️ Cloudinary</div>
+  <div class="box-ok">Cloud Name et API Key pré-remplis.</div>
+  <div class="fl"><label>Cloud Name</label><input type="text" id="c_cn" value="dzuuupd7t"></div>
+  <div class="fl"><label>API Key</label><input type="text" id="c_ck" value="818816489569596"></div>
+  <div class="fl"><label>API Secret</label><div class="iw"><input type="password" id="c_cs" placeholder="Ton secret Cloudinary"><button class="eye" onclick="toggle('c_cs',this)">👁</button></div></div>
+  <hr class="sep">
+  <div class="slbl">🔵 Facebook</div>
+  <div class="fl"><label>Page ID</label><input type="text" id="c_fbpid" value="176948315649787"></div>
+  <div class="fl"><label>Token Page Facebook</label><div class="iw"><input type="password" id="c_fbtoken" placeholder="EAAZBvm..."><button class="eye" onclick="toggle('c_fbtoken',this)">👁</button></div></div>
+  <hr class="sep">
+  <div class="slbl">📸 Instagram</div>
+  <div class="fl"><label>Account ID</label><input type="text" id="c_igid" value="17841406709165277"></div>
+  <div class="fl"><label>Token Instagram</label><div class="iw"><input type="password" id="c_igtoken" placeholder="EAAZBvm..."><button class="eye" onclick="toggle('c_igtoken',this)">👁</button></div></div>
+  <div class="mbtns">
+    <button class="bcancel" id="btn-cancel">Annuler</button>
+    <button class="bsave" id="btn-save">💾 Sauvegarder</button>
   </div>
 </div>
+</div>
 
-<!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v13 · Full Auto</small></div>
-  <div style="display:flex;align-items:center;gap:11px">
-    <div class="live"><div class="dot"></div>Agent actif</div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v14 · Full Auto</small></div>
+  <div class="hright">
+    <div class="live"><div class="dot"></div>Actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
   </div>
 </header>
 
-<!-- ══ MAIN ══ -->
 <main>
 <aside>
-
   <div>
-    <div class="stitle">📸 Photos source</div>
-    <div class="dz" id="dz">
-      <div style="font-size:1.8rem;margin-bottom:6px">🎸</div>
-      <p><strong>Glisse tes photos ici</strong><br>ou clique pour sélectionner</p>
-    </div>
+    <div class="st">📸 Photos</div>
+    <div class="dz" id="dz"><p><strong>Glisse tes photos ici</strong><br>ou clique pour sélectionner</p></div>
     <input type="file" id="fi" multiple accept="image/*">
     <div class="pgrid" id="pg"></div>
   </div>
-
   <div>
-    <div class="stitle">📡 Réseaux</div>
+    <div class="st">📡 Réseaux</div>
     <div class="nets">
-      <button class="nb on" data-n="instagram">
-        <span>📸</span><div><div>Instagram</div><div class="nh">mad_guitars_Aldo</div></div><div class="nc">✓</div>
-      </button>
-      <button class="nb on" data-n="facebook">
-        <span>🔵</span><div><div>Facebook</div><div class="nh">Mad-Guitars</div></div><div class="nc">✓</div>
-      </button>
-      <button class="nb" data-n="tiktok">
-        <span>🎵</span><div><div>TikTok</div><div class="nh">Caption uniquement</div></div><div class="nc"></div>
-      </button>
+      <button class="nb on" data-n="instagram"><span>📸</span><div><div>Instagram</div><div class="nh">mad_guitars_Aldo</div></div><div class="nc">✓</div></button>
+      <button class="nb on" data-n="facebook"><span>🔵</span><div><div>Facebook</div><div class="nh">Mad-Guitars</div></div><div class="nc">✓</div></button>
+      <button class="nb" data-n="tiktok"><span>🎵</span><div><div>TikTok</div><div class="nh">Caption uniquement</div></div><div class="nc"></div></button>
     </div>
   </div>
-
   <div>
-    <div class="stitle">🎯 Format</div>
+    <div class="st">🎯 Format</div>
     <div class="ftabs">
       <button class="fb on" data-f="post">Post</button>
       <button class="fb" data-f="story">Story</button>
@@ -251,9 +192,8 @@ textarea{resize:vertical;line-height:1.6}
       <button class="fb" data-f="carousel">Carrousel</button>
     </div>
   </div>
-
   <div>
-    <div class="stitle">🎭 Tonalité</div>
+    <div class="st">🎭 Tonalité</div>
     <select id="tone">
       <option value="storytelling">📖 Storytelling artisan</option>
       <option value="technique">🔧 Technique / Process</option>
@@ -263,448 +203,264 @@ textarea{resize:vertical;line-height:1.6}
       <option value="lancement">🚀 Lancement produit</option>
     </select>
   </div>
-
   <div>
-    <div class="stitle">📝 Contexte</div>
-    <textarea id="ctx" rows="3" placeholder="Ex: stand Mur du Son, micros colorés, noyer..."></textarea>
+    <div class="st">📝 Contexte</div>
+    <textarea id="ctx" rows="3" placeholder="Ex: stand Mur du Son, micros colorés..."></textarea>
   </div>
-
   <div>
-    <div class="stitle">🚀 Mode publication</div>
-    <div class="pmodes" id="pmodes">
-      <div class="pm on" data-pm="direct">
-        <div class="pm-icon">🎯</div>
-        <div><div class="pm-title">Direct Meta API</div><div class="pm-desc">Facebook + Instagram Graph API</div></div>
-        <div class="pm-radio"></div>
-      </div>
-      <div class="pm" data-pm="zapier">
-        <div class="pm-icon">⚡</div>
-        <div><div class="pm-title">Zapier</div><div class="pm-desc">Via webhook automatique</div></div>
-        <div class="pm-radio"></div>
-      </div>
-      <div class="pm" data-pm="semi">
-        <div class="pm-icon">📋</div>
-        <div><div class="pm-title">Semi-auto</div><div class="pm-desc">Texte + image prêts à copier</div></div>
-        <div class="pm-radio"></div>
-      </div>
+    <div class="st">🚀 Mode</div>
+    <div class="pmodes">
+      <div class="pm on" data-pm="direct"><span>🎯</span><div><div class="pm-t">Direct Meta API</div><div class="pm-d">FB + Instagram Graph API</div></div><div class="pmr"></div></div>
+      <div class="pm" data-pm="semi"><span>📋</span><div><div class="pm-t">Semi-auto</div><div class="pm-d">Texte prêt à copier</div></div><div class="pmr"></div></div>
     </div>
   </div>
-
   <div class="pw" id="pw"><div class="pb" id="pb"></div></div>
-
   <button class="gbtn" id="gbtn">
-    <span id="gi">✨</span>
-    <span id="gt">✨ Générer</span>
-    <div class="spin" id="gs"></div>
+    <span id="gi">✨</span><span id="gt">Générer</span><div class="spin" id="gs"></div>
   </button>
-
 </aside>
 
 <div class="area" id="area">
   <div class="empty" id="emp">
     <div class="empty-i">🎸</div>
-    <p>Ajoute des photos, configure tes APIs, lance l'agent.</p>
+    <p>Ajoute des photos et clique Générer pour créer tes publications.</p>
   </div>
 </div>
 </main>
 
-<div style="padding:11px 24px;border-top:1px solid var(--bd);background:var(--s1)">
-  <div style="font-size:.56rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">📟 Journal</div>
+<div style="padding:10px 22px;border-top:1px solid var(--bd);background:var(--s1)">
+  <div style="font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">📟 Journal</div>
   <div class="log" id="lg"><span class="le info">[init] M.A.D Guitars Agent initialisé · Configure tes APIs via ⚙️</span></div>
 </div>
 
 <script>
-// ══ STATE ══
-var photos=[], selPhoto=null, nets=new Set(['instagram','facebook']), fmt='post', pubMode='direct', cfg={};
+// === STATE ===
+var photos=[], sel=null, nets=new Set(['instagram','facebook']), fmt='post', mode='direct', cfg={};
 
-// ══ CONFIG MODAL ══
-var modal = document.getElementById('cfg-modal');
+// === EYE TOGGLE ===
+function toggle(id,btn){var i=document.getElementById(id);i.type=i.type==='password'?'text':'password';btn.textContent=i.type==='password'?'👁':'🙈';}
 
-document.getElementById('open-cfg').addEventListener('click', function(){
-  loadFormFromCfg();
-  modal.style.display = 'flex';
+// === MODAL ===
+var modal=document.getElementById('modal');
+document.getElementById('open-cfg').addEventListener('click',function(){fillForm();modal.classList.add('open');});
+document.getElementById('btn-cancel').addEventListener('click',function(){modal.classList.remove('open');});
+document.getElementById('btn-save').addEventListener('click',function(){
+  cfg.ai=document.getElementById('c_ai').value.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
+  cfg.cn=document.getElementById('c_cn').value.trim();
+  cfg.ck=document.getElementById('c_ck').value.trim();
+  cfg.cs=document.getElementById('c_cs').value.trim();
+  cfg.fbpid=document.getElementById('c_fbpid').value.trim();
+  cfg.fbtoken=document.getElementById('c_fbtoken').value.trim();
+  cfg.igid=document.getElementById('c_igid').value.trim();
+  cfg.igtoken=document.getElementById('c_igtoken').value.trim();
+  try{localStorage.setItem('mad14',JSON.stringify(cfg));}catch(e){}
+  modal.classList.remove('open');
+  log('✅ Config sauvegardée · FB: '+(cfg.fbtoken?cfg.fbtoken.substring(0,12)+'…':'VIDE'),'ok2');
 });
-document.getElementById('btn-cancel').addEventListener('click', function(){
-  modal.style.display = 'none';
-});
-document.getElementById('btn-save').addEventListener('click', function(){
-  cfg.anthropic   = document.getElementById('c_ai').value.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
-  cfg.cloudName   = document.getElementById('c_cn').value.trim();
-  cfg.cloudKey    = document.getElementById('c_ck').value.trim();
-  cfg.cloudSecret = document.getElementById('c_cs').value.trim();
-  cfg.fbPageId    = document.getElementById('c_fbpid').value.trim();
-  cfg.fbToken     = document.getElementById('c_fbtoken').value.trim();
-  cfg.igId        = document.getElementById('c_igid').value.trim();
-  cfg.igToken     = document.getElementById('c_igtoken').value.trim();
-  cfg.zapier      = document.getElementById('c_zap').value.trim();
-  try{ localStorage.setItem('mad3_cfg', JSON.stringify(cfg)); }catch(e){ log('⚠️ localStorage erreur: '+e.message,'ko'); }
-  modal.style.display = 'none';
-  log('✅ Config sauvegardée · FB token: '+(cfg.fbToken?cfg.fbToken.substring(0,12)+'…':'VIDE')+' · IG ID: '+(cfg.igId||'VIDE'), 'ok');
-});
-modal.addEventListener('click', function(e){ if(e.target===modal) modal.style.display='none'; });
+modal.addEventListener('click',function(e){if(e.target===modal)modal.classList.remove('open');});
 
-function loadFormFromCfg(){
-  document.getElementById('c_ai').value      = cfg.anthropic||'';
-  document.getElementById('c_cn').value      = cfg.cloudName||'dzuuupd7t';
-  document.getElementById('c_ck').value      = cfg.cloudKey||'818816489569596';
-  document.getElementById('c_cs').value      = cfg.cloudSecret||'';
-  document.getElementById('c_fbpid').value   = cfg.fbPageId||'176948315649787';
-  document.getElementById('c_fbtoken').value = cfg.fbToken||'';
-  document.getElementById('c_igid').value    = cfg.igId||'17841406709165277';
-  document.getElementById('c_igtoken').value = cfg.igToken||'';
-  document.getElementById('c_zap').value     = cfg.zapier||'';
+function fillForm(){
+  document.getElementById('c_ai').value=cfg.ai||'';
+  document.getElementById('c_cn').value=cfg.cn||'dzuuupd7t';
+  document.getElementById('c_ck').value=cfg.ck||'818816489569596';
+  document.getElementById('c_cs').value=cfg.cs||'';
+  document.getElementById('c_fbpid').value=cfg.fbpid||'176948315649787';
+  document.getElementById('c_fbtoken').value=cfg.fbtoken||'';
+  document.getElementById('c_igid').value=cfg.igid||'17841406709165277';
+  document.getElementById('c_igtoken').value=cfg.igtoken||'';
 }
 
 function loadCfg(){
-  try{ cfg = JSON.parse(localStorage.getItem('mad3_cfg')||'{}'); }catch(e){ cfg={}; }
-  if(!cfg.cloudName) cfg.cloudName='dzuuupd7t';
-  if(!cfg.cloudKey)  cfg.cloudKey='818816489569596';
+  try{cfg=JSON.parse(localStorage.getItem('mad14')||'{}');}catch(e){cfg={};}
+  cfg.cn=cfg.cn||'dzuuupd7t';cfg.ck=cfg.ck||'818816489569596';
+  cfg.fbpid=cfg.fbpid||'176948315649787';cfg.igid=cfg.igid||'17841406709165277';
 }
 
-// ══ PHOTOS ══
-var dz = document.getElementById('dz');
-dz.addEventListener('click', function(){ document.getElementById('fi').click(); });
-dz.addEventListener('dragover', function(e){ e.preventDefault(); dz.classList.add('over'); });
-dz.addEventListener('dragleave', function(){ dz.classList.remove('over'); });
-dz.addEventListener('drop', function(e){
-  e.preventDefault(); dz.classList.remove('over');
-  addPhotos(Array.from(e.dataTransfer.files).filter(function(f){ return f.type.startsWith('image/'); }));
-});
-document.getElementById('fi').addEventListener('change', function(e){ addPhotos(Array.from(e.target.files)); });
+// === PHOTOS ===
+var dz=document.getElementById('dz');
+dz.addEventListener('click',function(){document.getElementById('fi').click();});
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('over');});
+dz.addEventListener('dragleave',function(){dz.classList.remove('over');});
+dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('over');addP([].slice.call(e.dataTransfer.files).filter(function(f){return f.type.startsWith('image/');}));});
+document.getElementById('fi').addEventListener('change',function(e){addP([].slice.call(e.target.files));});
+function addP(files){files.forEach(function(f){var r=new FileReader();r.onload=function(e){var p={id:Date.now()+Math.random(),file:f,url:e.target.result,cloud:null};photos.push(p);if(!sel)sel=p;rg();};r.readAsDataURL(f);});}
+function rg(){var g=document.getElementById('pg');g.innerHTML='';photos.forEach(function(p){var d=document.createElement('div');d.className='thumb'+(sel&&sel.id===p.id?' sel':'');d.innerHTML='<img src="'+p.url+'"><button class="rb" data-id="'+p.id+'">✕</button>';d.querySelector('img').addEventListener('click',function(){sel=p;rg();});d.querySelector('.rb').addEventListener('click',function(e){e.stopPropagation();photos=photos.filter(function(x){return x.id!==p.id;});if(sel&&sel.id===p.id)sel=photos[0]||null;rg();});g.appendChild(d);});}
 
-function addPhotos(files){
-  files.forEach(function(f){
-    var r = new FileReader();
-    r.onload = function(ev){
-      var p = {id: Date.now()+Math.random(), file:f, dataUrl:ev.target.result, cloudUrl:null};
-      photos.push(p);
-      if(!selPhoto) selPhoto = p;
-      renderGrid();
-    };
-    r.readAsDataURL(f);
-  });
-}
-function renderGrid(){
-  var g = document.getElementById('pg'); g.innerHTML='';
-  photos.forEach(function(p){
-    var d = document.createElement('div');
-    d.className = 'thumb'+(selPhoto&&selPhoto.id===p.id?' sel':'')+(p.cloudUrl?' up':'');
-    d.innerHTML = '<img src="'+p.dataUrl+'"><button class="rb" data-id="'+p.id+'">✕</button><span class="ub">☁ OK</span>';
-    d.querySelector('img').addEventListener('click', function(){ selPhoto=p; renderGrid(); });
-    d.querySelector('.rb').addEventListener('click', function(e){ e.stopPropagation(); photos=photos.filter(function(x){return x.id!=p.id;}); if(selPhoto&&selPhoto.id===p.id) selPhoto=photos[0]||null; renderGrid(); });
-    g.appendChild(d);
-  });
-}
+// === UI ===
+document.querySelectorAll('.nb').forEach(function(b){b.addEventListener('click',function(){b.classList.toggle('on');var n=b.dataset.n;nets.has(n)?nets.delete(n):nets.add(n);});});
+document.querySelectorAll('.fb').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.fb').forEach(function(x){x.classList.remove('on');});b.classList.add('on');fmt=b.dataset.f;});});
+document.querySelectorAll('.pm').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.pm').forEach(function(x){x.classList.remove('on');});b.classList.add('on');mode=b.dataset.pm;});});
 
-// ══ NETWORKS ══
-document.querySelectorAll('.nb').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    btn.classList.toggle('on');
-    var n = btn.dataset.n;
-    if(nets.has(n)) nets.delete(n); else nets.add(n);
-  });
-});
-
-// ══ FORMAT ══
-document.querySelectorAll('.fb').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    document.querySelectorAll('.fb').forEach(function(b){ b.classList.remove('on'); });
-    btn.classList.add('on'); fmt = btn.dataset.f;
-  });
-});
-
-// ══ PUB MODE ══
-document.querySelectorAll('.pm').forEach(function(el){
-  el.addEventListener('click', function(){
-    document.querySelectorAll('.pm').forEach(function(b){ b.classList.remove('on'); });
-    el.classList.add('on'); pubMode = el.dataset.pm;
-  });
-});
-
-// ══ CLOUDINARY ══
-async function uploadCloud(photo){
-  if(photo.cloudUrl) return photo.cloudUrl;
-  if(!cfg.cloudName) throw new Error('Cloud Name manquant');
-  var fd = new FormData();
-  fd.append('file', photo.dataUrl);
-  fd.append('upload_preset', 'mad_guitars_auto');
-  fd.append('folder', 'mad-guitars');
-  var r = await fetch('https://api.cloudinary.com/v1_1/'+cfg.cloudName+'/image/upload', {method:'POST', body:fd});
-  var d = await r.json();
-  if(d.secure_url){ photo.cloudUrl=d.secure_url; renderGrid(); return d.secure_url; }
-  // signed fallback
-  if(!cfg.cloudSecret) throw new Error('Preset "mad_guitars_auto" introuvable. Crée-le dans Cloudinary (Settings → Upload Presets → Add unsigned)');
-  var ts = Math.round(Date.now()/1000);
-  var sig = await sha1('folder=mad-guitars&timestamp='+ts+cfg.cloudSecret);
-  var fd2 = new FormData();
-  fd2.append('file',photo.dataUrl); fd2.append('api_key',cfg.cloudKey);
-  fd2.append('timestamp',ts); fd2.append('signature',sig); fd2.append('folder','mad-guitars');
-  r = await fetch('https://api.cloudinary.com/v1_1/'+cfg.cloudName+'/image/upload', {method:'POST', body:fd2});
-  d = await r.json();
-  if(d.secure_url){ photo.cloudUrl=d.secure_url; renderGrid(); return d.secure_url; }
+// === CLOUDINARY ===
+async function cloud(photo){
+  if(photo.cloud)return photo.cloud;
+  var fd=new FormData();fd.append('file',photo.url);fd.append('upload_preset','mad_guitars_auto');fd.append('folder','mad-guitars');
+  var r=await fetch('https://api.cloudinary.com/v1_1/'+(cfg.cn||'dzuuupd7t')+'/image/upload',{method:'POST',body:fd});
+  var d=await r.json();
+  if(d.secure_url){photo.cloud=d.secure_url;rg();return d.secure_url;}
+  if(!cfg.cs)throw new Error('Preset "mad_guitars_auto" introuvable. Crée-le dans Cloudinary → Settings → Upload Presets.');
+  var ts=Math.round(Date.now()/1000),sig=await sha1('folder=mad-guitars&timestamp='+ts+cfg.cs);
+  var fd2=new FormData();fd2.append('file',photo.url);fd2.append('api_key',cfg.ck||'818816489569596');fd2.append('timestamp',ts);fd2.append('signature',sig);fd2.append('folder','mad-guitars');
+  r=await fetch('https://api.cloudinary.com/v1_1/'+(cfg.cn||'dzuuupd7t')+'/image/upload',{method:'POST',body:fd2});
+  d=await r.json();if(d.secure_url){photo.cloud=d.secure_url;rg();return d.secure_url;}
   throw new Error(d.error&&d.error.message||'Upload Cloudinary échoué');
 }
-async function sha1(str){
-  var buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
-}
+async function sha1(s){var b=await crypto.subtle.digest('SHA-1',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');}
 
-// ══ AI GENERATION ══
-var TONES = {
-  storytelling:"storytelling artisan, narratif et poétique, maître luthier qui raconte son geste avec passion",
-  technique:"technique précis, vocabulaire lutherie, éducatif mais passionné",
-  engagement:"engageant, pose une question ouverte à la communauté guitar",
-  evenement:"live event EN CE MOMENT, urgent et enthousiaste, donne envie de venir",
-  coulisses:"behind the scenes, intime et authentique, montre le process de fabrication",
-  lancement:"lancement produit percutant, met en valeur les caractéristiques uniques"
-};
-var NETS = {
-  instagram:"Instagram @mad_guitars_Aldo — mix fr/en possible, émojis modérés, 5-10 hashtags ciblés guitar lutherie custom",
-  facebook:"Facebook Mad-Guitars — communauté francophone, ton posé et storytelling artisan, 2-3 hashtags max",
-  tiktok:"TikTok — caption 1-2 lignes ultra accrocheur, hashtags viraux guitar"
-};
-var FMTS = {post:"post standard",story:"story très court 1-2 phrases percutantes",reel:"caption reel accrocheur",carousel:"intro carousel donne envie de swiper"};
-
+// === AI ===
+var TONES={storytelling:'storytelling artisan, narratif et poétique, maître luthier qui raconte son geste avec passion',technique:'technique précis, vocabulaire lutherie, éducatif mais passionné',engagement:'engageant, pose une question ouverte à la communauté guitar',evenement:'live event EN CE MOMENT, urgent et enthousiaste, donne envie de venir',coulisses:'behind the scenes, intime et authentique, montre le process de fabrication',lancement:'lancement produit percutant, met en valeur les caractéristiques uniques'};
+var NETS={instagram:'Instagram @mad_guitars_Aldo — mix fr/en possible, émojis modérés, 5-10 hashtags ciblés guitar lutherie custom',facebook:'Facebook Mad-Guitars — communauté francophone, storytelling artisan, 2-3 hashtags max',tiktok:'TikTok — caption 1-2 lignes ultra accrocheur, hashtags viraux guitar'};
+var FMTS={post:'post standard',story:'story très court 1-2 phrases percutantes',reel:'caption reel accrocheur',carousel:'intro carousel donne envie de swiper'};
 async function genText(net){
-  if(!cfg.anthropic) throw new Error('Clé Anthropic manquante — configure via ⚙️');
-  var tone = document.getElementById('tone').value;
-  var ctx  = document.getElementById('ctx').value;
-  var prompt = 'Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[tone]+'\n'+(ctx?'Contexte : '+ctx:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}';
-  var key = cfg.anthropic.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
-  var r = await fetch('/api/anthropic', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      _apiKey: key,
-      model:'claude-sonnet-4-6', max_tokens:1000,
-      system:'Réponds uniquement en JSON valide sans backticks ni markdown.',
-      messages:[{role:'user',content:prompt}]
-    })
-  });
-  var d = await r.json();
-  if(!r.ok) throw new Error('Erreur API '+r.status+': '+(d.error&&d.error.message||JSON.stringify(d)));
-    var raw = (d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text)||'{}';
-  try{ return JSON.parse(raw.replace(/```json|```/g,'').trim()); }
-  catch(e){ return {texte:raw, hashtags:'#MADGuitars #Lutherie #CustomGuitar'}; }
+  if(!cfg.ai)throw new Error('Clé Anthropic manquante — configure via ⚙️');
+  var prompt='Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[document.getElementById('tone').value]+'\n'+(document.getElementById('ctx').value?'Contexte : '+document.getElementById('ctx').value:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}';
+  var r=await fetch('/api/anthropic',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_apiKey:cfg.ai,model:'claude-sonnet-4-6',max_tokens:1000,system:'Réponds uniquement en JSON valide sans backticks ni markdown.',messages:[{role:'user',content:prompt}]})});
+  var txt=await r.text();
+  try{var d=JSON.parse(txt);if(!r.ok)throw new Error(d.error&&d.error.message||'Erreur API '+r.status);var raw=d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text||'{}';return JSON.parse(raw.replace(/```json|```/g,'').trim());}
+  catch(e){throw new Error('Parse: '+txt.substring(0,80));}
 }
 
-// ══ PUBLISH : DIRECT META API ══
-async function pubFacebook(text, imageUrl){
-  if(!cfg.fbToken||!cfg.fbPageId) throw new Error('Token ou Page ID Facebook manquant — configure via ⚙️');
-  var body = {
-    _path: '/v19.0/'+cfg.fbPageId+'/feed',
-    message: text,
-    access_token: cfg.fbToken
-  };
-  if(imageUrl) body.link = imageUrl;
-  var r = await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  var d = await r.json();
-  if(d.id) return d.id;
-  // Fallback: try without image
-  if(d.error && imageUrl) {
-    delete body.link;
-    var r2 = await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    var d2 = await r2.json();
-    if(d2.id) return d2.id;
-    throw new Error(d2.error&&d2.error.message||'Erreur Facebook API');
-  }
-  throw new Error(d.error&&d.error.message||'Erreur Facebook API');
+// === META API ===
+async function postFB(text,imgUrl){
+  if(!cfg.fbtoken||!cfg.fbpid)throw new Error('Token ou Page ID Facebook manquant');
+  var body={_path:'/v19.0/'+cfg.fbpid+'/feed',message:text,access_token:cfg.fbtoken};
+  if(imgUrl)body.link=imgUrl;
+  var r=await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  var d=await r.json();if(d.id)return d.id;
+  // retry without link
+  if(imgUrl&&d.error){delete body.link;r=await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});d=await r.json();if(d.id)return d.id;}
+  throw new Error(d.error&&d.error.message||'Erreur FB');
+}
+async function postIG(text,imgUrl){
+  if(!cfg.igtoken||!cfg.igid)throw new Error('Token ou Account ID Instagram manquant');
+  if(!imgUrl)throw new Error('Instagram requiert une image Cloudinary');
+  var r1=await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_path:'/v19.0/'+cfg.igid+'/media',image_url:imgUrl,caption:text,access_token:cfg.igtoken})});
+  var d1=await r1.json();if(!d1.id)throw new Error(d1.error&&d1.error.message||'Container IG échoué');
+  for(var i=0;i<12;i++){await new Promise(function(r){setTimeout(r,2000);});var rc=await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_path:'/v19.0/'+d1.id,_method:'GET',fields:'status_code',access_token:cfg.igtoken})});var dc=await rc.json();if(dc.status_code==='FINISHED')break;if(dc.status_code==='ERROR')throw new Error('Container IG en erreur');}
+  var r2=await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({_path:'/v19.0/'+cfg.igid+'/media_publish',creation_id:d1.id,access_token:cfg.igtoken})});
+  var d2=await r2.json();if(d2.id)return d2.id;
+  throw new Error(d2.error&&d2.error.message||'Publication IG échouée');
 }
 
-async function pubInstagram(text, imageUrl){
-  if(!cfg.igToken||!cfg.igId) throw new Error('Token ou Account ID Instagram manquant — configure via ⚙️');
-  if(!imageUrl) throw new Error('Instagram requiert une image hébergée sur Cloudinary');
-  // Step 1: create container
-  var r1 = await fetch('/api/graph',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({_path:'/v19.0/'+cfg.igId+'/media', image_url:imageUrl, caption:text, access_token:cfg.igToken})
-  });
-  var d1 = await r1.json();
-  if(!d1.id) throw new Error(d1.error&&d1.error.message||'Création container IG échouée');
-  // Step 2: wait for container
-  for(var i=0;i<12;i++){
-    await new Promise(function(r){setTimeout(r,2000);});
-    var rc = await fetch('/api/graph',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({_path:'/v19.0/'+d1.id, _method:'GET', fields:'status_code', access_token:cfg.igToken})
-    });
-    var dc = await rc.json();
-    if(dc.status_code==='FINISHED') break;
-    if(dc.status_code==='ERROR') throw new Error('Container Instagram en erreur');
-  }
-  // Step 3: publish
-  var r2 = await fetch('/api/graph',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({_path:'/v19.0/'+cfg.igId+'/media_publish', creation_id:d1.id, access_token:cfg.igToken})
-  });
-  var d2 = await r2.json();
-  if(d2.id) return d2.id;
-  throw new Error(d2.error&&d2.error.message||'Publication Instagram échouée');
-}
-
-// ══ PUBLISH : ZAPIER ══
-async function pubZapier(net, text, hashtags, imageUrl){
-  if(!cfg.zapier) throw new Error('Webhook Zapier non configuré — configure via ⚙️');
-  var payload = JSON.stringify({network:net, caption:text+'\n\n'+hashtags, image_url:imageUrl||'', brand:'MAD Guitars', format:fmt});
-  var urls = [cfg.zapier, 'https://corsproxy.io/?'+encodeURIComponent(cfg.zapier)];
-  for(var i=0;i<urls.length;i++){
-    try{
-      var r = await fetch(urls[i],{method:'POST',headers:{'Content-Type':'application/json'},body:payload});
-      if(r.ok||r.status===200) return 'zapier_ok';
-    }catch(e){ if(i===urls.length-1) throw e; }
-  }
-  throw new Error('Zapier inaccessible');
-}
-
-// ══ PUBLISH : SEMI-AUTO ══
-function pubSemi(cardId, net, text, hashtags, imageUrl){
-  var full = text+'\n\n'+hashtags;
-  var cb = document.getElementById(cardId+'_cb');
-  if(!cb) return;
-  var p = document.createElement('div');
-  p.className = 'sa-panel';
-  p.innerHTML = '<h3>📋 Prêt à poster sur '+net+'</h3>'+(imageUrl?'<a href="'+imageUrl+'" target="_blank" style="font-size:.68rem;color:var(--bl)">🖼️ Voir image →</a>':'')+
-    '<div class="sa-url">'+(imageUrl||'Pas d\'image')+'</div>'+
-    '<button class="sa-copy" data-cid="'+cardId+'">📋 Copier texte + hashtags</button>'+
-    '<p style="font-size:.62rem;color:var(--dim);line-height:1.5">Copie et poste depuis l\'app Instagram/Facebook.</p>';
-  p.querySelector('.sa-copy').addEventListener('click',function(){copyTxt(full);});
-  cb.appendChild(p);
-  window['_sa_'+cardId]={text:full};
-  return 'semi_ready';
-}
-
-// ══ MAIN AGENT ══
-document.getElementById('gbtn').addEventListener('click', runAgent);
-
-async function runAgent(){
-  if(!cfg.anthropic){ log('❌ Clé Anthropic manquante','ko'); modal.style.display='flex'; loadFormFromCfg(); return; }
-  if(nets.size===0){ log('⚠️ Sélectionne au moins un réseau','ko'); return; }
-  log('🔑 Config · FB PageID: '+(cfg.fbPageId||'VIDE')+' · Token: '+(cfg.fbToken?cfg.fbToken.substring(0,10)+'…':'VIDE'),'info');
-  setLoad(true); setP(0);
-  document.getElementById('emp')&&document.getElementById('emp').remove();
-  var netList = Array.from(nets);
-  var cloudUrl = null;
-  if(selPhoto){
-    log('☁️ Upload Cloudinary…','bl');
-    try{ cloudUrl=await uploadCloud(selPhoto); log('✅ Image : '+cloudUrl,'ok'); }
-    catch(e){ log('❌ Cloudinary: '+e.message,'ko'); }
-  }
-  setP(20);
-  for(var i=0;i<netList.length;i++){
-    var net = netList[i];
-    var cid = 'c_'+net+'_'+Date.now();
-    mkCard(cid,net);
-    log('✨ Génération texte '+net+'…','info');
-    var g;
-    try{ g=await genText(net); updCard(cid,g.texte,g.hashtags); log('✅ Texte '+net+' OK','ok'); }
-    catch(e){ updCard(cid,'❌ '+e.message,''); setSt(cid,'ko','❌ Erreur IA'); log('❌ IA: '+e.message,'ko'); setP(50+i*40); continue; }
-    setP(40+i*30);
-    // Store cloudUrl for later posting
-    window['_cloud_'+cid] = cloudUrl;
-    setSt(cid,'wait','✏️ À relire');
-    log('✏️ '+net+' — relis et corrige avant de poster','info');
-    setP(60+(i+1)*40/netList.length);
-    await new Promise(function(r){setTimeout(r,300);});
-  }
-  setLoad(false); setP(100); setTimeout(function(){setP(0);},2000);
-}
-
-// ══ CARD HELPERS ══
-var NL = {instagram:'📸 Instagram · mad_guitars_Aldo', facebook:'🔵 Facebook · Mad-Guitars', tiktok:'🎵 TikTok'};
+// === CARDS ===
+var NL={instagram:'📸 Instagram · mad_guitars_Aldo',facebook:'🔵 Facebook · Mad-Guitars',tiktok:'🎵 TikTok'};
 function mkCard(id,net){
   var area=document.getElementById('area');
-  var d=document.createElement('div'); d.id=id; d.className='card';
-  var imgOk=selPhoto?'<div style="font-size:.62rem;color:#2ecc71;margin-bottom:8px">📸 Image Cloudinary prête ✅</div>':'';
-  d.innerHTML='<div class="ch"><div class="cp">'+(NL[net]||net)+'</div><span class="badge wait" id="'+id+'_st">⏳</span></div>'
-    +'<div class="cb" id="'+id+'_cb">'+imgOk
-    +'<div class="ct ld" id="'+id+'_t">✨ Génération…</div>'
-    +'<p style="font-size:.58rem;color:rgba(255,255,255,.4);margin-top:4px">✏️ Clique pour modifier</p>'
-    +'<div class="ctags" id="'+id+'_h"></div></div>'
-    +'<div class="car">'
-    +'<button class="bsm br" id="'+id+'_rbtn">↺ Regénérer</button>'
-    +'<button class="bsm bc" id="'+id+'_cbtn">📋 Copier</button>'
-    +'<button class="bsm bp" id="'+id+'_pbtn">🚀 Poster</button>'
-    +'</div>';
-  d.querySelector('#'+id+'_rbtn').addEventListener('click',function(){regenCard(id,net);});
-  d.querySelector('#'+id+'_cbtn').addEventListener('click',function(){copyCard(id);});
-  d.querySelector('#'+id+'_pbtn').addEventListener('click',function(){repostCard(id,net);});
-  d.scrollIntoView({behavior:'smooth',block:'end'});
+  var d=document.createElement('div');d.id=id;d.className='card';
+  d.innerHTML=
+    '<div class="ch">'+
+      '<div class="cp">'+(NL[net]||net)+'</div>'+
+      '<span class="bdg wait" id="'+id+'_st">⏳ En attente</span>'+
+    '</div>'+
+    '<div class="cb" id="'+id+'_cb">'+
+      '<div class="ct ld" id="'+id+'_t">✨ Génération en cours…</div>'+
+      '<div class="ctags" id="'+id+'_h"></div>'+
+      '<div class="edit-hint" id="'+id+'_hint"></div>'+
+    '</div>'+
+    '<div class="car">'+
+      '<button class="bsm br" id="'+id+'_r">↺ Regénérer</button>'+
+      '<button class="bsm bc" id="'+id+'_c">📋 Copier</button>'+
+      '<button class="bsm bpost" id="'+id+'_p">🚀 Poster</button>'+
+    '</div>';
+  area.appendChild(d);
+  d.querySelector('#'+id+'_r').addEventListener('click',function(){regenCard(id,net);});
+  d.querySelector('#'+id+'_c').addEventListener('click',function(){cpCard(id);});
+  d.querySelector('#'+id+'_p').addEventListener('click',function(){postCard(id,net);});
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-function updCard(id,t,h){
-  var te=document.getElementById(id+'_t'),he=document.getElementById(id+'_h');
-  if(te){
-    te.textContent=t;
-    te.classList.remove('ld');
-    te.contentEditable='true';
-    te.style.outline='1px dashed rgba(200,150,12,0.3)';
-    te.style.borderRadius='4px';
-    te.style.padding='6px';
-    te.style.minHeight='60px';
-    te.title='Clique pour modifier';
-  }
-  if(he){
-    he.textContent=h;
-    he.contentEditable='true';
-    he.style.outline='1px dashed rgba(200,150,12,0.2)';
-    he.style.borderRadius='4px';
-    he.style.padding='4px';
-  }
+function setTxt(id,t,h){
+  var te=document.getElementById(id+'_t');
+  var he=document.getElementById(id+'_h');
+  var hi=document.getElementById(id+'_hint');
+  if(te){te.innerHTML='';te.appendChild(document.createTextNode(t));te.classList.remove('ld');te.classList.add('ready');te.contentEditable='true';}
+  if(he){he.innerHTML='';he.appendChild(document.createTextNode(h));he.contentEditable='true';}
+  if(hi)hi.textContent='✏️ Clique sur le texte pour modifier avant de poster';
 }
-function setSt(id,type,label){
-  var el=document.getElementById(id+'_st');
-  if(el){el.className='badge '+type;el.textContent=label;}
-}
-function copyCard(id){
-  copyTxt((document.getElementById(id+'_t')&&document.getElementById(id+'_t').textContent||'')+'\n\n'+(document.getElementById(id+'_h')&&document.getElementById(id+'_h').textContent||''));
-}
-function copyTxt(s){
-  navigator.clipboard.writeText(s).then(function(){log('📋 Copié !','info');}).catch(function(){log('⚠️ Copie échouée','ko');});
+function setSt(id,cls,lbl){var e=document.getElementById(id+'_st');if(e){e.className='bdg '+cls;e.textContent=lbl;}}
+function cpCard(id){
+  var t=(document.getElementById(id+'_t')||{}).innerText||'';
+  var h=(document.getElementById(id+'_h')||{}).innerText||'';
+  navigator.clipboard.writeText(t+'\n\n'+h).then(function(){log('📋 Copié !','info');}).catch(function(){});
 }
 async function regenCard(id,net){
   var te=document.getElementById(id+'_t'),he=document.getElementById(id+'_h');
-  if(te){te.textContent='✨ Regénération…';te.classList.add('ld');}
-  if(he)he.textContent='';
-  setSt(id,'go','⏳ Regénération');
-  try{ var g=await genText(net); updCard(id,g.texte,g.hashtags); setSt(id,'wait','✏️ Mis à jour'); }
-  catch(e){ updCard(id,'❌ '+e.message,''); setSt(id,'ko','❌'); }
+  if(te){te.textContent='✨ Regénération…';te.classList.add('ld');te.classList.remove('ready');te.contentEditable='false';}
+  if(he){he.textContent='';}
+  setSt(id,'wait','⏳ Regénération');
+  try{var g=await genText(net);setTxt(id,g.texte,g.hashtags||'');setSt(id,'edit-st','✏️ À relire');}
+  catch(e){if(te)te.textContent='❌ '+e.message;setSt(id,'ko','❌');}
 }
-async function repostCard(id,net){
-  var t=document.getElementById(id+'_t')&&document.getElementById(id+'_t').innerText||'';
-  var h=document.getElementById(id+'_h')&&document.getElementById(id+'_h').innerText||'';
-  var btn=document.getElementById(id+'_pbtn'); btn.disabled=true;
-  setSt(id,'go','⏳ Repost…');
-  var cloudUrl=selPhoto&&selPhoto.cloudUrl||null;
-  if(selPhoto&&!cloudUrl){ try{cloudUrl=await uploadCloud(selPhoto);}catch(e){log('❌ Upload: '+e.message,'ko');} }
+async function postCard(id,net){
+  var t=(document.getElementById(id+'_t')||{}).innerText||'';
+  var h=(document.getElementById(id+'_h')||{}).innerText||'';
+  var btn=document.getElementById(id+'_p');
+  if(btn)btn.disabled=true;
+  setSt(id,'wait','⏳ Publication…');
+  var imgUrl=sel&&sel.cloud||null;
+  if(sel&&!imgUrl){try{imgUrl=await cloud(sel);}catch(e){log('❌ Cloudinary: '+e.message,'ko2');}}
   try{
-    var pid, full=t+'\n\n'+h;
-    if(pubMode==='direct'&&net==='facebook') pid=await pubFacebook(full,cloudUrl);
-    else if(pubMode==='direct'&&net==='instagram') pid=await pubInstagram(full,cloudUrl);
-    else if(pubMode==='zapier') pid=await pubZapier(net,t,h,cloudUrl);
-    else{ pubSemi(id,net,t,h,cloudUrl); pid='semi'; }
-    setSt(id,pid==='semi'?'copy':'ok',pid==='semi'?'📋 Prêt':'✅ '+pid);
-    log('✅ Repost '+net+' OK','ok');
-  }catch(e){ setSt(id,'ko','❌ '+e.message); log('❌ '+e.message,'ko'); }
-  btn.disabled=false;
+    var full=t+'\n\n'+h,pid;
+    if(mode==='direct'&&net==='facebook')pid=await postFB(full,imgUrl);
+    else if(mode==='direct'&&net==='instagram')pid=await postIG(full,imgUrl);
+    else{semiPanel(id,net,full,imgUrl);pid='semi';}
+    if(pid==='semi'){setSt(id,'cpbadge','📋 Prêt à copier');}
+    else{setSt(id,'ok','✅ Posté · '+pid);log('✅ '+net+' posté ! ID: '+pid,'ok2');}
+  }catch(e){
+    setSt(id,'ko','❌ '+e.message);log('❌ '+net+': '+e.message,'ko2');
+    semiPanel(id,net,t+'\n\n'+h,imgUrl);
+    setSt(id,'cpbadge','📋 Fallback semi-auto');
+  }
+  if(btn)btn.disabled=false;
+}
+function semiPanel(id,net,text,imgUrl){
+  var cb=document.getElementById(id+'_cb');if(!cb)return;
+  var p=document.createElement('div');p.className='sa';
+  p.innerHTML='<h3>📋 Prêt à poster sur '+net+'</h3>'+(imgUrl?'<a href="'+imgUrl+'" target="_blank" style="font-size:.62rem;color:var(--bl)">🖼️ Voir image →</a>':'')+
+    '<div class="sa-url">'+(imgUrl||'Pas d\'image')+'</div>'+
+    '<button class="sa-cp">📋 Copier texte + hashtags</button>';
+  p.querySelector('.sa-cp').addEventListener('click',function(){navigator.clipboard.writeText(text).then(function(){log('📋 Copié !','info');});});
+  // remove old panel if exists
+  var old=cb.querySelector('.sa');if(old)old.remove();
+  cb.appendChild(p);
 }
 
-// ══ UI ══
-function setLoad(on){
-  var btn=document.getElementById('gbtn'),sp=document.getElementById('gs'),ic=document.getElementById('gi'),tx=document.getElementById('gt');
-  btn.disabled=on; sp.style.display=on?'block':'none'; ic.style.display=on?'none':'inline';
-  tx.textContent=on?'Agent en cours…':'Générer & Publier';
-}
-function setP(pct){
-  var w=document.getElementById('pw'),b=document.getElementById('pb');
-  w.style.display=pct>0?'block':'none'; b.style.width=pct+'%';
-}
-function log(msg,type){
-  var el=document.getElementById('lg');
-  var s=document.createElement('span'); s.className='le '+(type||'');
-  var t=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  s.textContent='['+t+'] '+msg; el.appendChild(s); el.scrollTop=el.scrollHeight;
+// === AGENT ===
+document.getElementById('gbtn').addEventListener('click',run);
+async function run(){
+  if(!cfg.ai){log('❌ Clé Anthropic manquante','ko2');document.getElementById('open-cfg').click();return;}
+  if(nets.size===0){log('⚠️ Sélectionne au moins un réseau','ko2');return;}
+  setLoad(true);setP(0);
+  document.getElementById('emp')&&document.getElementById('emp').remove();
+  var nl=Array.from(nets),cloudUrl=null;
+  if(sel){log('☁️ Upload Cloudinary…','bl2');try{cloudUrl=await cloud(sel);log('✅ Image : '+cloudUrl,'ok2');}catch(e){log('❌ Cloudinary: '+e.message,'ko2');}}
+  setP(20);
+  for(var i=0;i<nl.length;i++){
+    var net=nl[i],cid='c_'+net+'_'+Date.now();
+    mkCard(cid,net);
+    log('✨ Génération texte '+net+'…','info');
+    try{
+      var g=await genText(net);
+      setTxt(cid,g.texte||'',g.hashtags||'');
+      setSt(cid,'edit-st','✏️ À relire');
+      log('✅ Texte '+net+' OK','ok2');
+      window['_cloud_'+cid]=cloudUrl;
+    }catch(e){
+      var te=document.getElementById(cid+'_t');
+      if(te)te.textContent='❌ '+e.message;
+      setSt(cid,'ko','❌ Erreur');
+      log('❌ '+net+': '+e.message,'ko2');
+    }
+    setP(40+(i+1)*50/nl.length);
+    await new Promise(function(r){setTimeout(r,200);});
+  }
+  setLoad(false);setP(100);setTimeout(function(){setP(0);},2000);
 }
 
-// ══ INIT ══
+// === UI HELPERS ===
+function setLoad(on){var b=document.getElementById('gbtn'),s=document.getElementById('gs'),ic=document.getElementById('gi'),t=document.getElementById('gt');b.disabled=on;s.style.display=on?'block':'none';ic.style.display=on?'none':'inline';t.textContent=on?'Génération…':'Générer';}
+function setP(p){var w=document.getElementById('pw'),b=document.getElementById('pb');w.style.display=p>0?'block':'none';b.style.width=p+'%';}
+function log(m,c){var el=document.getElementById('lg');var s=document.createElement('span');s.className='le '+(c||'');var t=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});s.textContent='['+t+'] '+m;el.appendChild(s);el.scrollTop=el.scrollHeight;}
+
 loadCfg();
 </script>
 </body>
