@@ -206,7 +206,7 @@ textarea{resize:vertical;line-height:1.6}
 
 <!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v7 · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v8 · Full Auto</small></div>
   <div style="display:flex;align-items:center;gap:11px">
     <div class="live"><div class="dot"></div>Agent actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
@@ -491,15 +491,15 @@ async function genText(net){
 // ══ PUBLISH : DIRECT META API ══
 async function pubFacebook(text, imageUrl){
   if(!cfg.fbToken||!cfg.fbPageId) throw new Error('Token ou Page ID Facebook manquant — configure via ⚙️');
-  var url, body;
+  var path, body;
   if(imageUrl){
-    url = 'https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.fbPageId+'/photos';
-    body = {caption:text, url:imageUrl, access_token:cfg.fbToken};
+    path = '/v19.0/'+cfg.fbPageId+'/photos';
+    body = {_path:path, caption:text, url:imageUrl, access_token:cfg.fbToken};
   } else {
-    url = 'https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.fbPageId+'/feed';
-    body = {message:text, access_token:cfg.fbToken};
+    path = '/v19.0/'+cfg.fbPageId+'/feed';
+    body = {_path:path, message:text, access_token:cfg.fbToken};
   }
-  var r = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  var r = await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   var d = await r.json();
   if(d.id) return d.id;
   throw new Error(d.error&&d.error.message||'Erreur Facebook API');
@@ -508,22 +508,28 @@ async function pubFacebook(text, imageUrl){
 async function pubInstagram(text, imageUrl){
   if(!cfg.igToken||!cfg.igId) throw new Error('Token ou Account ID Instagram manquant — configure via ⚙️');
   if(!imageUrl) throw new Error('Instagram requiert une image hébergée sur Cloudinary');
-  var r1 = await fetch('https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.igId+'/media',{
+  // Step 1: create container
+  var r1 = await fetch('/api/graph',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({image_url:imageUrl, caption:text, access_token:cfg.igToken})
+    body:JSON.stringify({_path:'/v19.0/'+cfg.igId+'/media', image_url:imageUrl, caption:text, access_token:cfg.igToken})
   });
   var d1 = await r1.json();
   if(!d1.id) throw new Error(d1.error&&d1.error.message||'Création container IG échouée');
+  // Step 2: wait for container
   for(var i=0;i<12;i++){
     await new Promise(function(r){setTimeout(r,2000);});
-    var rc = await fetch('https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+d1.id+'?fields=status_code&access_token='+cfg.igToken);
+    var rc = await fetch('/api/graph',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({_path:'/v19.0/'+d1.id, _method:'GET', fields:'status_code', access_token:cfg.igToken})
+    });
     var dc = await rc.json();
     if(dc.status_code==='FINISHED') break;
     if(dc.status_code==='ERROR') throw new Error('Container Instagram en erreur');
   }
-  var r2 = await fetch('https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.igId+'/media_publish',{
+  // Step 3: publish
+  var r2 = await fetch('/api/graph',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({creation_id:d1.id, access_token:cfg.igToken})
+    body:JSON.stringify({_path:'/v19.0/'+cfg.igId+'/media_publish', creation_id:d1.id, access_token:cfg.igToken})
   });
   var d2 = await r2.json();
   if(d2.id) return d2.id;
