@@ -457,8 +457,8 @@ async function genText(net){
     method:'POST',
     headers:{
       'Content-Type':'application/json',
-      'x-api-key': cfg.anthropic,
-      'anthropic-version': '2023-06-01',
+      'x-api-key': cfg.anthropic.replace(/[^\x20-\x7E]/g,''),
+      'anthropic-version': '2023-06-01'
     },
     body:JSON.stringify({
       model:'claude-sonnet-4-20250514', max_tokens:1000,
