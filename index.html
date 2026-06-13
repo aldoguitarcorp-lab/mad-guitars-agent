@@ -169,12 +169,12 @@ textarea{resize:vertical;line-height:1.6}
     <hr class="sep">
     <div class="section-label">🎯 Facebook Graph API</div>
     <div class="box-ok">✅ Tes tokens sont prêts — colle-les ici.</div>
-    <div class="fg"><label>Facebook Page ID</label><input type="text" id="c_fbpid" placeholder="176948315649787"></div>
+    <div class="fg"><label>Facebook Page ID</label><input type="text" id="c_fbpid" value="176948315649787"></div>
     <div class="fg"><label>Token Facebook Page (Mad-Guitars)</label><input type="password" id="c_fbtoken" placeholder="EAAZBvm..."></div>
 
     <hr class="sep">
     <div class="section-label">📸 Instagram Graph API</div>
-    <div class="fg"><label>Instagram Account ID</label><input type="text" id="c_igid" placeholder="17841406709165277"></div>
+    <div class="fg"><label>Instagram Account ID</label><input type="text" id="c_igid" value="17841406709165277"></div>
     <div class="fg"><label>Token Instagram (même token FB)</label><input type="password" id="c_igtoken" placeholder="EAAZBvm..."></div>
 
     <hr class="sep">
@@ -332,9 +332,9 @@ function loadFormFromCfg(){
   document.getElementById('c_cn').value      = cfg.cloudName||'dzuuupd7t';
   document.getElementById('c_ck').value      = cfg.cloudKey||'818816489569596';
   document.getElementById('c_cs').value      = cfg.cloudSecret||'';
-  document.getElementById('c_fbpid').value   = cfg.fbPageId||'';
+  document.getElementById('c_fbpid').value   = cfg.fbPageId||'176948315649787';
   document.getElementById('c_fbtoken').value = cfg.fbToken||'';
-  document.getElementById('c_igid').value    = cfg.igId||'';
+  document.getElementById('c_igid').value    = cfg.igId||'17841406709165277';
   document.getElementById('c_igtoken').value = cfg.igToken||'';
   document.getElementById('c_zap').value     = cfg.zapier||'';
 }
@@ -453,12 +453,12 @@ async function genText(net){
   if(!cfg.anthropic) throw new Error('Clé Anthropic manquante — configure via ⚙️');
   var tone = document.getElementById('tone').value;
   var ctx  = document.getElementById('ctx').value;
-  var r = await fetch('https://corsproxy.io/?url=https://api.anthropic.com/v1/messages',{
+  var r = await fetch('https://thingproxy.freeboard.io/fetch/https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{
       'Content-Type':'application/json',
       'x-api-key': cfg.anthropic,
-      'anthropic-version': '2023-06-01'
+      'anthropic-version': '2023-06-01',
     },
     body:JSON.stringify({
       model:'claude-sonnet-4-20250514', max_tokens:1000,
