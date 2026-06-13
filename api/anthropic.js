@@ -7,7 +7,6 @@ module.exports = async function(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   try {
-    // Read raw body from stream
     const bodyStr = await new Promise((resolve, reject) => {
       let data = '';
       req.on('data', chunk => data += chunk);
