@@ -453,21 +453,26 @@ async function genText(net){
   if(!cfg.anthropic) throw new Error('Clé Anthropic manquante — configure via ⚙️');
   var tone = document.getElementById('tone').value;
   var ctx  = document.getElementById('ctx').value;
-  var r = await fetch('https://thingproxy.freeboard.io/fetch/https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key': cfg.anthropic.replace(/[^\x20-\x7E]/g,''),
-      'anthropic-version': '2023-06-01'
-    },
-    body:JSON.stringify({
+  var prompt = 'Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[tone]+'\n'+(ctx?'Contexte : '+ctx:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}';
+  var key = cfg.anthropic.trim();
+  // Use XMLHttpRequest to avoid header encoding issues
+  var d = await new Promise(function(resolve, reject){
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://api.anthropic.com/v1/messages', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('x-api-key', key);
+    xhr.setRequestHeader('anthropic-version', '2023-06-01');
+    xhr.onload = function(){ 
+      try{ resolve(JSON.parse(xhr.responseText)); }
+      catch(e){ reject(new Error('Réponse invalide: '+xhr.responseText.substring(0,100))); }
+    };
+    xhr.onerror = function(){ reject(new Error('Erreur réseau XHR')); };
+    xhr.send(JSON.stringify({
       model:'claude-sonnet-4-20250514', max_tokens:1000,
       system:'Réponds uniquement en JSON valide sans backticks ni markdown.',
-      messages:[{role:'user',content:'Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[tone]+'\n'+(ctx?'Contexte : '+ctx:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}'}]
-    })
+      messages:[{role:'user',content:prompt}]
+    }));
   });
-  if(r.status===401) throw new Error('Clé Anthropic invalide');
-  var d = await r.json();
   var raw = (d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text)||'{}';
   try{ return JSON.parse(raw.replace(/```json|```/g,'').trim()); }
   catch(e){ return {texte:raw, hashtags:'#MADGuitars #Lutherie #CustomGuitar'}; }
