@@ -206,7 +206,7 @@ textarea{resize:vertical;line-height:1.6}
 
 <!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v8 · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v9 · Full Auto</small></div>
   <div style="display:flex;align-items:center;gap:11px">
     <div class="live"><div class="dot"></div>Agent actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
@@ -491,17 +491,23 @@ async function genText(net){
 // ══ PUBLISH : DIRECT META API ══
 async function pubFacebook(text, imageUrl){
   if(!cfg.fbToken||!cfg.fbPageId) throw new Error('Token ou Page ID Facebook manquant — configure via ⚙️');
-  var path, body;
-  if(imageUrl){
-    path = '/v19.0/'+cfg.fbPageId+'/photos';
-    body = {_path:path, caption:text, url:imageUrl, access_token:cfg.fbToken};
-  } else {
-    path = '/v19.0/'+cfg.fbPageId+'/feed';
-    body = {_path:path, message:text, access_token:cfg.fbToken};
-  }
+  var body = {
+    _path: '/v19.0/'+cfg.fbPageId+'/feed',
+    message: text,
+    access_token: cfg.fbToken
+  };
+  if(imageUrl) body.link = imageUrl;
   var r = await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   var d = await r.json();
   if(d.id) return d.id;
+  // Fallback: try without image
+  if(d.error && imageUrl) {
+    delete body.link;
+    var r2 = await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    var d2 = await r2.json();
+    if(d2.id) return d2.id;
+    throw new Error(d2.error&&d2.error.message||'Erreur Facebook API');
+  }
   throw new Error(d.error&&d.error.message||'Erreur Facebook API');
 }
 
