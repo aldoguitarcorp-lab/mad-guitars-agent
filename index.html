@@ -87,9 +87,9 @@ textarea{resize:vertical;line-height:1.55}
 @keyframes sp{to{transform:rotate(360deg)}}
 
 /* CARDS */
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:7px;overflow:hidden;animation:si .35s ease both}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:7px;overflow:hidden;animation:si .35s ease both;display:flex;flex-direction:column;max-height:60vh}
 @keyframes si{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.ch{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--bd);background:var(--s2)}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--bd);background:var(--s2);flex-shrink:0}
 .cp{font-size:.74rem;font-weight:700}
 .bdg{display:inline-flex;align-items:center;gap:4px;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px}
 .wait{background:rgba(230,126,34,.15);color:#e67e22}
@@ -97,14 +97,14 @@ textarea{resize:vertical;line-height:1.55}
 .ok{background:rgba(46,204,113,.15);color:var(--gr)}
 .ko{background:rgba(231,76,60,.15);color:var(--re)}
 .cpbadge{background:rgba(155,89,182,.15);color:#9b59b6}
-.cb{padding:14px}
+.cb{padding:14px;overflow-y:auto;flex:1;min-height:0}
 .img-ok{font-size:.6rem;color:var(--gr);margin-bottom:8px;padding:3px 8px;background:rgba(46,204,113,.08);border-radius:4px;display:inline-block}
 .ct{font-size:.84rem;line-height:1.75;white-space:pre-wrap;min-height:50px;border-radius:4px;padding:6px;transition:outline .2s}
 .ct.ld{color:var(--dim);font-style:italic}
 .ct.ready{outline:1px dashed rgba(200,150,12,.35);cursor:text}
 .ctags{margin-top:8px;font-size:.7rem;color:var(--gold);line-height:1.9;border-radius:4px;padding:4px;outline:1px dashed rgba(200,150,12,.2)}
 .edit-hint{font-size:.56rem;color:var(--dim);font-style:italic;margin-top:4px}
-.car{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);background:var(--s2)}
+.car{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bd);background:var(--s2);flex-shrink:0}
 .bsm{flex:1;padding:8px 10px;border-radius:5px;border:none;font-family:'Raleway',sans-serif;font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .2s}
 .br{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.br:hover{border-color:var(--bl);color:var(--bl)}
 .bc{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.bc:hover{border-color:var(--gold);color:var(--gl)}
@@ -160,7 +160,7 @@ textarea{resize:vertical;line-height:1.55}
 </div>
 
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v14 · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v15 · Full Auto</small></div>
   <div class="hright">
     <div class="live"><div class="dot"></div>Actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
