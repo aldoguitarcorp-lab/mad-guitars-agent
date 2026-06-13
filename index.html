@@ -57,7 +57,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 /* LAYOUT */
 main{flex:1;display:grid;grid-template-columns:290px 1fr;overflow:hidden}
 aside{border-right:1px solid var(--bd);padding:18px 16px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;height:calc(100vh - 65px)}
-.area{padding:20px 24px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;height:calc(100vh - 65px)}
+.area{padding:20px 24px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:calc(100vh - 65px)}
 
 /* SIDEBAR COMPONENTS */
 .stitle{font-size:.58rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
@@ -206,7 +206,7 @@ textarea{resize:vertical;line-height:1.6}
 
 <!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · v11 · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v13 · Full Auto</small></div>
   <div style="display:flex;align-items:center;gap:11px">
     <div class="live"><div class="dot"></div>Agent actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
@@ -614,15 +614,17 @@ var NL = {instagram:'📸 Instagram · mad_guitars_Aldo', facebook:'🔵 Faceboo
 function mkCard(id,net){
   var area=document.getElementById('area');
   var d=document.createElement('div'); d.id=id; d.className='card';
-  d.innerHTML='<div class="ch"><div class="cp">'+(NL[net]||net)+'</div><span class="badge wait" id="'+id+'_st">⏳ En attente</span></div>'+
-    '<div class="cb" id="'+id+'_cb">'+(selPhoto?'<img class="ci v" src="'+selPhoto.dataUrl+'">':'')+
-    '<div class="ct ld" id="'+id+'_t">✨ Génération…</div><div style="font-size:.6rem;color:var(--dim);margin-top:4px;font-style:italic">✏️ Clique sur le texte pour le modifier avant de poster</div>'+
-    '<div class="ctags" id="'+id+'_h"></div></div>'+
-    '<div class="car">'+
-    '<button class="bsm br" id="'+id+'_rbtn">↺ Regénérer</button>'+
-    '<button class="bsm bc" id="'+id+'_cbtn">📋 Copier</button>'+
-    '<button class="bsm bp" id="'+id+'_pbtn">🚀 Poster</button></div>';
-  area.appendChild(d);
+  var imgOk=selPhoto?'<div style="font-size:.62rem;color:#2ecc71;margin-bottom:8px">📸 Image Cloudinary prête ✅</div>':'';
+  d.innerHTML='<div class="ch"><div class="cp">'+(NL[net]||net)+'</div><span class="badge wait" id="'+id+'_st">⏳</span></div>'
+    +'<div class="cb" id="'+id+'_cb">'+imgOk
+    +'<div class="ct ld" id="'+id+'_t">✨ Génération…</div>'
+    +'<p style="font-size:.58rem;color:rgba(255,255,255,.4);margin-top:4px">✏️ Clique pour modifier</p>'
+    +'<div class="ctags" id="'+id+'_h"></div></div>'
+    +'<div class="car">'
+    +'<button class="bsm br" id="'+id+'_rbtn">↺ Regénérer</button>'
+    +'<button class="bsm bc" id="'+id+'_cbtn">📋 Copier</button>'
+    +'<button class="bsm bp" id="'+id+'_pbtn">🚀 Poster</button>'
+    +'</div>';
   d.querySelector('#'+id+'_rbtn').addEventListener('click',function(){regenCard(id,net);});
   d.querySelector('#'+id+'_cbtn').addEventListener('click',function(){copyCard(id);});
   d.querySelector('#'+id+'_pbtn').addEventListener('click',function(){repostCard(id,net);});
