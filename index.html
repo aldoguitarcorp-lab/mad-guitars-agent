@@ -481,9 +481,8 @@ async function genText(net){
       messages:[{role:'user',content:prompt}]
     })
   });
-  if(r.status===401) throw new Error('Clé Anthropic invalide');
-  if(!r.ok) throw new Error('Erreur API: '+r.status);
   var d = await r.json();
+  if(!r.ok) throw new Error('Erreur API '+r.status+': '+(d.error&&d.error.message||JSON.stringify(d)));
     var raw = (d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text)||'{}';
   try{ return JSON.parse(raw.replace(/```json|```/g,'').trim()); }
   catch(e){ return {texte:raw, hashtags:'#MADGuitars #Lutherie #CustomGuitar'}; }
