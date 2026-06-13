@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M.A.D Guitars · Agent Social IA</title>
+<title>M.A.D Guitars · Agent Social IA v7</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -32,6 +32,10 @@ body{background:var(--bg);color:var(--tx);font-family:'Raleway',sans-serif;min-h
 .fg label{font-size:.6rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase}
 .fg input{background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 11px;border-radius:5px;font-family:'Raleway',sans-serif;font-size:.8rem;outline:none;width:100%}
 .fg input:focus{border-color:var(--gold)}
+.fg .input-wrap{position:relative;display:flex;align-items:center}
+.fg .input-wrap input{flex:1;padding-right:36px}
+.fg .eye{position:absolute;right:8px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:.9rem;padding:0;line-height:1}
+.fg .eye:hover{color:var(--goldl)}
 .box-ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--gr);line-height:1.6}
 .box-info{background:rgba(52,152,219,.1);border:1px solid rgba(52,152,219,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--bl);line-height:1.6}
 .box-warn{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);border-radius:5px;padding:9px 12px;font-size:.74rem;color:var(--re);line-height:1.6}
@@ -53,7 +57,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 /* LAYOUT */
 main{flex:1;display:grid;grid-template-columns:290px 1fr;overflow:hidden}
 aside{border-right:1px solid var(--bd);padding:18px 16px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;height:calc(100vh - 65px)}
-.area{padding:20px 24px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;height:calc(100vh - 65px)}
+.area{padding:20px 24px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:calc(100vh - 65px)}
 
 /* SIDEBAR COMPONENTS */
 .stitle{font-size:.58rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
@@ -116,8 +120,8 @@ textarea{resize:vertical;line-height:1.6}
 .badge.ok{background:rgba(46,204,113,.15);color:var(--gr)}
 .badge.ko{background:rgba(231,76,60,.15);color:var(--re)}
 .badge.copy{background:rgba(155,89,182,.15);color:var(--pu)}
-.cb{padding:15px}
-.ci{width:100%;max-height:200px;object-fit:cover;border-radius:5px;margin-bottom:12px;display:none}
+.cb{padding:12px}
+.ci{width:100%;max-height:140px;object-fit:cover;border-radius:5px;margin-bottom:10px;display:none}
 .ci.v{display:block}
 .ct{font-size:.84rem;line-height:1.75;white-space:pre-wrap;min-height:40px}
 .ct.ld{color:var(--dim);font-style:italic}
@@ -126,7 +130,7 @@ textarea{resize:vertical;line-height:1.6}
 .bsm{flex:1;padding:7px 9px;border-radius:5px;border:none;font-family:'Raleway',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .2s}
 .br{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.br:hover{border-color:var(--bl);color:var(--bl)}
 .bc{background:var(--s1);border:1px solid var(--bd);color:var(--dim)}.bc:hover{border-color:var(--gold);color:var(--goldl)}
-.bp{background:linear-gradient(135deg,var(--gold),var(--goldl));color:#000;font-weight:800}.bp:hover{box-shadow:0 4px 14px rgba(200,150,12,.4)}
+.bp{background:linear-gradient(135deg,var(--gold),var(--goldl));color:#000;font-weight:800;font-size:.78rem;padding:9px 14px}.bp:hover{box-shadow:0 4px 14px rgba(200,150,12,.4)}
 .bp:disabled{opacity:.4;cursor:not-allowed}
 
 .sa-panel{background:var(--s2);border:1px solid var(--bd);border-radius:5px;padding:12px;display:flex;flex-direction:column;gap:8px;margin-top:12px}
@@ -157,7 +161,11 @@ textarea{resize:vertical;line-height:1.6}
 
     <hr class="sep">
     <div class="section-label">🤖 Anthropic</div>
-    <div class="fg"><label>Clé API Anthropic</label><input type="password" id="c_ai" placeholder="sk-ant-api03-..."></div>
+    <div class="fg"><label>Clé API Anthropic</label>
+    <div class="input-wrap">
+      <input type="password" id="c_ai" placeholder="sk-ant-api03-...">
+      <button class="eye" type="button" onclick="var i=document.getElementById('c_ai');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
+    </div></div>
 
     <hr class="sep">
     <div class="section-label">☁️ Cloudinary</div>
@@ -170,12 +178,20 @@ textarea{resize:vertical;line-height:1.6}
     <div class="section-label">🎯 Facebook Graph API</div>
     <div class="box-ok">✅ Tes tokens sont prêts — colle-les ici.</div>
     <div class="fg"><label>Facebook Page ID</label><input type="text" id="c_fbpid" value="176948315649787"></div>
-    <div class="fg"><label>Token Facebook Page (Mad-Guitars)</label><input type="password" id="c_fbtoken" placeholder="EAAZBvm..."></div>
+    <div class="fg"><label>Token Facebook Page (Mad-Guitars)</label>
+    <div class="input-wrap">
+      <input type="password" id="c_fbtoken" placeholder="EAAZBvm...">
+      <button class="eye" type="button" onclick="var i=document.getElementById('c_fbtoken');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
+    </div></div>
 
     <hr class="sep">
     <div class="section-label">📸 Instagram Graph API</div>
     <div class="fg"><label>Instagram Account ID</label><input type="text" id="c_igid" value="17841406709165277"></div>
-    <div class="fg"><label>Token Instagram (même token FB)</label><input type="password" id="c_igtoken" placeholder="EAAZBvm..."></div>
+    <div class="fg"><label>Token Instagram (même token FB)</label>
+    <div class="input-wrap">
+      <input type="password" id="c_igtoken" placeholder="EAAZBvm...">
+      <button class="eye" type="button" onclick="var i=document.getElementById('c_igtoken');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁️':'🙈'">👁️</button>
+    </div></div>
 
     <hr class="sep">
     <div class="section-label">⚡ Zapier (optionnel)</div>
@@ -190,7 +206,7 @@ textarea{resize:vertical;line-height:1.6}
 
 <!-- ══ HEADER ══ -->
 <header>
-  <div class="logo">M.A.D Guitars<small>Agent Social IA · Full Auto</small></div>
+  <div class="logo">M.A.D Guitars<small>Agent Social IA · v13 · Full Auto</small></div>
   <div style="display:flex;align-items:center;gap:11px">
     <div class="live"><div class="dot"></div>Agent actif</div>
     <button class="cfg-btn" id="open-cfg">⚙️ Config API</button>
@@ -278,7 +294,7 @@ textarea{resize:vertical;line-height:1.6}
 
   <button class="gbtn" id="gbtn">
     <span id="gi">✨</span>
-    <span id="gt">Générer &amp; Publier</span>
+    <span id="gt">✨ Générer</span>
     <div class="spin" id="gs"></div>
   </button>
 
@@ -312,7 +328,7 @@ document.getElementById('btn-cancel').addEventListener('click', function(){
   modal.style.display = 'none';
 });
 document.getElementById('btn-save').addEventListener('click', function(){
-  cfg.anthropic   = document.getElementById('c_ai').value.trim();
+  cfg.anthropic   = document.getElementById('c_ai').value.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
   cfg.cloudName   = document.getElementById('c_cn').value.trim();
   cfg.cloudKey    = document.getElementById('c_ck').value.trim();
   cfg.cloudSecret = document.getElementById('c_cs').value.trim();
@@ -453,22 +469,21 @@ async function genText(net){
   if(!cfg.anthropic) throw new Error('Clé Anthropic manquante — configure via ⚙️');
   var tone = document.getElementById('tone').value;
   var ctx  = document.getElementById('ctx').value;
-  var r = await fetch('https://thingproxy.freeboard.io/fetch/https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key': cfg.anthropic,
-      'anthropic-version': '2023-06-01',
-    },
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514', max_tokens:1000,
+  var prompt = 'Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[tone]+'\n'+(ctx?'Contexte : '+ctx:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}';
+  var key = cfg.anthropic.trim().split('').filter(function(c){return c.charCodeAt(0)>=32&&c.charCodeAt(0)<=126;}).join('');
+  var r = await fetch('/api/anthropic', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      _apiKey: key,
+      model:'claude-sonnet-4-6', max_tokens:1000,
       system:'Réponds uniquement en JSON valide sans backticks ni markdown.',
-      messages:[{role:'user',content:'Tu es l\'agent social media de M.A.D Guitars, lutherie artisanale en Ardèche. Fondateur Aldo. Guitares custom, micros artisanaux colorés.\n\nRéseau : '+NETS[net]+'\nFormat : '+FMTS[fmt]+'\nTonalité : '+TONES[tone]+'\n'+(ctx?'Contexte : '+ctx:'')+'\n\nJSON: {"texte":"corps sans hashtags","hashtags":"hashtags sur une ligne"}'}]
+      messages:[{role:'user',content:prompt}]
     })
   });
-  if(r.status===401) throw new Error('Clé Anthropic invalide');
   var d = await r.json();
-  var raw = (d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text)||'{}';
+  if(!r.ok) throw new Error('Erreur API '+r.status+': '+(d.error&&d.error.message||JSON.stringify(d)));
+    var raw = (d.content&&d.content.find(function(b){return b.type==='text';})&&d.content.find(function(b){return b.type==='text';}).text)||'{}';
   try{ return JSON.parse(raw.replace(/```json|```/g,'').trim()); }
   catch(e){ return {texte:raw, hashtags:'#MADGuitars #Lutherie #CustomGuitar'}; }
 }
@@ -476,39 +491,51 @@ async function genText(net){
 // ══ PUBLISH : DIRECT META API ══
 async function pubFacebook(text, imageUrl){
   if(!cfg.fbToken||!cfg.fbPageId) throw new Error('Token ou Page ID Facebook manquant — configure via ⚙️');
-  var url, body;
-  if(imageUrl){
-    url = 'https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.fbPageId+'/photos';
-    body = {caption:text, url:imageUrl, access_token:cfg.fbToken};
-  } else {
-    url = 'https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.fbPageId+'/feed';
-    body = {message:text, access_token:cfg.fbToken};
-  }
-  var r = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  var body = {
+    _path: '/v19.0/'+cfg.fbPageId+'/feed',
+    message: text,
+    access_token: cfg.fbToken
+  };
+  if(imageUrl) body.link = imageUrl;
+  var r = await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   var d = await r.json();
   if(d.id) return d.id;
+  // Fallback: try without image
+  if(d.error && imageUrl) {
+    delete body.link;
+    var r2 = await fetch('/api/graph',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    var d2 = await r2.json();
+    if(d2.id) return d2.id;
+    throw new Error(d2.error&&d2.error.message||'Erreur Facebook API');
+  }
   throw new Error(d.error&&d.error.message||'Erreur Facebook API');
 }
 
 async function pubInstagram(text, imageUrl){
   if(!cfg.igToken||!cfg.igId) throw new Error('Token ou Account ID Instagram manquant — configure via ⚙️');
   if(!imageUrl) throw new Error('Instagram requiert une image hébergée sur Cloudinary');
-  var r1 = await fetch('https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.igId+'/media',{
+  // Step 1: create container
+  var r1 = await fetch('/api/graph',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({image_url:imageUrl, caption:text, access_token:cfg.igToken})
+    body:JSON.stringify({_path:'/v19.0/'+cfg.igId+'/media', image_url:imageUrl, caption:text, access_token:cfg.igToken})
   });
   var d1 = await r1.json();
   if(!d1.id) throw new Error(d1.error&&d1.error.message||'Création container IG échouée');
+  // Step 2: wait for container
   for(var i=0;i<12;i++){
     await new Promise(function(r){setTimeout(r,2000);});
-    var rc = await fetch('https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+d1.id+'?fields=status_code&access_token='+cfg.igToken);
+    var rc = await fetch('/api/graph',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({_path:'/v19.0/'+d1.id, _method:'GET', fields:'status_code', access_token:cfg.igToken})
+    });
     var dc = await rc.json();
     if(dc.status_code==='FINISHED') break;
     if(dc.status_code==='ERROR') throw new Error('Container Instagram en erreur');
   }
-  var r2 = await fetch('https://corsproxy.io/?url=https://graph.facebook.com/v19.0/'+cfg.igId+'/media_publish',{
+  // Step 3: publish
+  var r2 = await fetch('/api/graph',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({creation_id:d1.id, access_token:cfg.igToken})
+    body:JSON.stringify({_path:'/v19.0/'+cfg.igId+'/media_publish', creation_id:d1.id, access_token:cfg.igToken})
   });
   var d2 = await r2.json();
   if(d2.id) return d2.id;
@@ -572,23 +599,10 @@ async function runAgent(){
     try{ g=await genText(net); updCard(cid,g.texte,g.hashtags); log('✅ Texte '+net+' OK','ok'); }
     catch(e){ updCard(cid,'❌ '+e.message,''); setSt(cid,'ko','❌ Erreur IA'); log('❌ IA: '+e.message,'ko'); setP(50+i*40); continue; }
     setP(40+i*30);
-    var full = g.texte+'\n\n'+g.hashtags;
-    setSt(cid,'go','⏳ Publication…');
-    log('🚀 Post '+net+' via '+pubMode+'…','bl');
-    try{
-      var pid;
-      if(pubMode==='direct'&&net==='facebook') pid=await pubFacebook(full,cloudUrl);
-      else if(pubMode==='direct'&&net==='instagram') pid=await pubInstagram(full,cloudUrl);
-      else if(pubMode==='zapier') pid=await pubZapier(net,g.texte,g.hashtags,cloudUrl);
-      else{ pubSemi(cid,net,g.texte,g.hashtags,cloudUrl); pid='semi'; }
-      if(pid==='semi'||pubMode==='semi'){ setSt(cid,'copy','📋 Prêt à copier'); log('📋 '+net+' semi-auto prêt','info'); }
-      else{ setSt(cid,'ok','✅ Posté · '+pid); log('✅ '+net+' posté ! ID: '+pid,'ok'); }
-    }catch(e){
-      setSt(cid,'ko','❌ '+e.message); log('❌ '+net+': '+e.message,'ko');
-      pubSemi(cid,net,g.texte,g.hashtags,cloudUrl);
-      setSt(cid,'copy','📋 Fallback semi-auto');
-      log('ℹ️ Fallback semi-auto activé','info');
-    }
+    // Store cloudUrl for later posting
+    window['_cloud_'+cid] = cloudUrl;
+    setSt(cid,'wait','✏️ À relire');
+    log('✏️ '+net+' — relis et corrige avant de poster','info');
     setP(60+(i+1)*40/netList.length);
     await new Promise(function(r){setTimeout(r,300);});
   }
@@ -600,15 +614,17 @@ var NL = {instagram:'📸 Instagram · mad_guitars_Aldo', facebook:'🔵 Faceboo
 function mkCard(id,net){
   var area=document.getElementById('area');
   var d=document.createElement('div'); d.id=id; d.className='card';
-  d.innerHTML='<div class="ch"><div class="cp">'+(NL[net]||net)+'</div><span class="badge wait" id="'+id+'_st">⏳ En attente</span></div>'+
-    '<div class="cb" id="'+id+'_cb">'+(selPhoto?'<img class="ci v" src="'+selPhoto.dataUrl+'">':'')+
-    '<div class="ct ld" id="'+id+'_t">✨ Génération…</div>'+
-    '<div class="ctags" id="'+id+'_h"></div></div>'+
-    '<div class="car">'+
-    '<button class="bsm br" id="'+id+'_rbtn">↺ Regénérer</button>'+
-    '<button class="bsm bc" id="'+id+'_cbtn">📋 Copier</button>'+
-    '<button class="bsm bp" id="'+id+'_pbtn">🚀 Re-poster</button></div>';
-  area.appendChild(d);
+  var imgOk=selPhoto?'<div style="font-size:.62rem;color:#2ecc71;margin-bottom:8px">📸 Image Cloudinary prête ✅</div>':'';
+  d.innerHTML='<div class="ch"><div class="cp">'+(NL[net]||net)+'</div><span class="badge wait" id="'+id+'_st">⏳</span></div>'
+    +'<div class="cb" id="'+id+'_cb">'+imgOk
+    +'<div class="ct ld" id="'+id+'_t">✨ Génération…</div>'
+    +'<p style="font-size:.58rem;color:rgba(255,255,255,.4);margin-top:4px">✏️ Clique pour modifier</p>'
+    +'<div class="ctags" id="'+id+'_h"></div></div>'
+    +'<div class="car">'
+    +'<button class="bsm br" id="'+id+'_rbtn">↺ Regénérer</button>'
+    +'<button class="bsm bc" id="'+id+'_cbtn">📋 Copier</button>'
+    +'<button class="bsm bp" id="'+id+'_pbtn">🚀 Poster</button>'
+    +'</div>';
   d.querySelector('#'+id+'_rbtn').addEventListener('click',function(){regenCard(id,net);});
   d.querySelector('#'+id+'_cbtn').addEventListener('click',function(){copyCard(id);});
   d.querySelector('#'+id+'_pbtn').addEventListener('click',function(){repostCard(id,net);});
@@ -616,8 +632,23 @@ function mkCard(id,net){
 }
 function updCard(id,t,h){
   var te=document.getElementById(id+'_t'),he=document.getElementById(id+'_h');
-  if(te){te.textContent=t;te.classList.remove('ld');}
-  if(he)he.textContent=h;
+  if(te){
+    te.textContent=t;
+    te.classList.remove('ld');
+    te.contentEditable='true';
+    te.style.outline='1px dashed rgba(200,150,12,0.3)';
+    te.style.borderRadius='4px';
+    te.style.padding='6px';
+    te.style.minHeight='60px';
+    te.title='Clique pour modifier';
+  }
+  if(he){
+    he.textContent=h;
+    he.contentEditable='true';
+    he.style.outline='1px dashed rgba(200,150,12,0.2)';
+    he.style.borderRadius='4px';
+    he.style.padding='4px';
+  }
 }
 function setSt(id,type,label){
   var el=document.getElementById(id+'_st');
@@ -638,8 +669,8 @@ async function regenCard(id,net){
   catch(e){ updCard(id,'❌ '+e.message,''); setSt(id,'ko','❌'); }
 }
 async function repostCard(id,net){
-  var t=document.getElementById(id+'_t')&&document.getElementById(id+'_t').textContent||'';
-  var h=document.getElementById(id+'_h')&&document.getElementById(id+'_h').textContent||'';
+  var t=document.getElementById(id+'_t')&&document.getElementById(id+'_t').innerText||'';
+  var h=document.getElementById(id+'_h')&&document.getElementById(id+'_h').innerText||'';
   var btn=document.getElementById(id+'_pbtn'); btn.disabled=true;
   setSt(id,'go','⏳ Repost…');
   var cloudUrl=selPhoto&&selPhoto.cloudUrl||null;
